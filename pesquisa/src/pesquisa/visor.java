@@ -14,12 +14,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -41,16 +37,17 @@ public class visor extends javax.swing.JFrame {
     /**
      * Creates new form visor
      */
-    Font font =  new Font("Dialog", Font.BOLD, 12);
+    Font font =  new Font("Dialog", Font.PLAIN, 12);
     private boolean compilado;
-     private boolean sobrescrever;
+    private boolean hastring;
+    private boolean sobrescrever;
     private boolean tasalvo;
     private boolean taaberto;
     private String nome;
     private String caminho;
     private int aumentar,diminuir;
     UndoManager Gerente = new UndoManager();
-      StyledDocument documento = new DefaultStyledDocument();  
+    StyledDocument documento = new DefaultStyledDocument();  
 
 
     
@@ -58,29 +55,29 @@ public class visor extends javax.swing.JFrame {
        
         tasalvo = false;
         taaberto=false;
-        
+        hastring = false;
         compilado = false;
         sobrescrever= false;
         Gerente = new UndoManager();
         
          
         
-        
+        //setExtendedState(MAXIMIZED_BOTH); // tela cheia
         initComponents();
         
-           jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
+            jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
                         public void undoableEditHappened(UndoableEditEvent e) {
-                                Gerente.addEdit(e.getEdit());
+                            Gerente.addEdit(e.getEdit());
                              
                                    
                         }
-                });
+            });
            
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
          
        
-  
+       
         PalavraReservada();    
     
     }
@@ -108,12 +105,12 @@ public class visor extends javax.swing.JFrame {
     private void  PalavraReservada( ){
         
         
-          final StyleContext cont = StyleContext.getDefaultStyleContext();
-          final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
-          final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.YELLOW);
-          final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
-          final AttributeSet preto = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
-          DefaultStyledDocument doc = new DefaultStyledDocument() {
+        final StyleContext cont = StyleContext.getDefaultStyleContext();
+        final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
+        final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.YELLOW);
+        final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
+        final AttributeSet preto = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
+        DefaultStyledDocument doc = new DefaultStyledDocument() {
             public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
                 super.insertString(offset, str, a);
 
@@ -123,56 +120,127 @@ public class visor extends javax.swing.JFrame {
                  
                 int x = ultimo(text, offset);
                 if (x < 0) x = 0;
-                int y= inicio(text, offset + str.length());
-                int inp = x;
-                int fimp = x;
+                    int y= inicio(text, offset + str.length());
+                    int inp = x;
+                    int fimp = x;
 
   
-                while (fimp <= y) {
-                    if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
+                    while (fimp <= y) {
+                        if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
 						
-                        if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
-                            setCharacterAttributes(inp, fimp - inp, azul, false);
-                        else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
-                             setCharacterAttributes(inp, fimp - inp, verde , false);
-                       
-                        else if  (text.substring(inp, fimp).matches("\"*")) 
-                         
+                            if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                            {
+                                setCharacterAttributes(inp, fimp - inp, azul, false);
+                            }
+                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
+                            {
+                                setCharacterAttributes(inp, fimp - inp, verde , false);
+                            }
+                            /*else if  (text.substring(inp, fimp).matches("\"*")) 
+                            {
                              
-                             setCharacterAttributes(inp, fimp - inp, amarelo , false);
-                        else
-                            setCharacterAttributes(inp, fimp - inp, preto, false);
-                        inp = fimp;
+                               setCharacterAttributes(inp, fimp - inp, amarelo , false);
+                            }*/
+                            else
+                            {
+                              setCharacterAttributes(inp, fimp - inp, preto, false);
+                                System.out.println("preto "+ inp +" "+fimp);
+                            }
+                            inp = fimp;
+                        }
+                        fimp++;
                     }
-                    fimp++;
-                }
-                      int z = text.length();
+                        int z = text.length();
     
-                      int cont =0,f=0,e=0;
-                      for(int i =0;i<z; i++){
+                        int cont =0,f=0,e=0;
+                        for(int i =0;i<z; i++){
            
            
                            if(text.charAt(i)=='\"') {
              
-                                cont++;
+                               cont++;
                                if(cont ==1) {
-                                     f=i;
+                                    f=i;
                          
-                                 }
+                               }
                      
-                                 if(cont ==2) {
-                                      e=i;
+                               else if(cont ==2) {
+                                    e=i;
                  
-                                     setCharacterAttributes(f, e-f, amarelo, false);
+                                    setCharacterAttributes(f, e-f+1, amarelo, false);
                                     cont=0;
-                
-                                 }
+                                    hastring= true;
+                                    System.out.println("chamou "+ e +" "+ f);
+                                }
                             }
                         }
-                     }        
+                        if(hastring==true){
+                           
+                            final int indice = text.indexOf("\"");
+                 
+                            x = indice;
+                            if (x < 0) x = 0;
+                                y= text.length();
+                                inp = x;
+                                fimp = x;
+           
+                                while (fimp <= y) {
+                     
+                                    if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
+						
+                                          if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, azul, false);
+                                            }
+                                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, verde , false);
+                                            }
+                                           /* else if  (text.substring(inp, fimp).matches("\"*")) 
+                                            {
+                             
+                                                setCharacterAttributes(inp, fimp - inp, amarelo , false);
+                                            }*/
+                                            else
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, preto, false);
+                          
+                                            }
+                                            inp = fimp;
+                                    }
+                                    fimp++;
+                                }
+                                    int z2 = text.length();
+    
+                                    int cont2 =0,f2=0,e2=0;
+                       
+                                    for(int i =0;i<z2; i++){
+           
+                                        if(text.charAt(i)=='\"') {
+             
+                                            cont2++;
+                             
+                                            if(cont2 ==1) {
+                                                f2=i;
+                                     
+                                    
+                                            }
+                     
+                                            else if(cont2 ==2) {
+                                                e2=i;
+                           
+                                                setCharacterAttributes(f2, e2-f2+1, amarelo, false);
+                                                cont2=0;
+                                
+                                            }
+                          
+                                        }
+                                    }
+                        }
+            }            
         };
   
-              jTextPane1.setDocument(doc) ; 
+        jTextPane1.setDocument(doc) ; 
              
      
     }
@@ -230,6 +298,7 @@ public class visor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editor");
+        setExtendedState(getExtendedState());
 
         jLabel1.setText("Saida");
 
@@ -243,6 +312,7 @@ public class visor extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTextPane1);
 
+        jTextPane2.setMaximumSize(new java.awt.Dimension(1440, 500));
         jScrollPane1.setViewportView(jTextPane2);
 
         jMenu1.setText("Arquivo");
@@ -256,7 +326,7 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2Abrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2Abrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2Abrir.setText("Abrir");
         jMenuItem2Abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,22 +481,22 @@ public class visor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 424, Short.MAX_VALUE))
+                .addGap(0, 514, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addComponent(jScrollPane3)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -435,29 +505,29 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // Botão copiar
-         JTextPane copiar = jTextPane1; 
-          copiar.copy();
+        JTextPane copiar = jTextPane1; 
+        copiar.copy();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem11DesfazerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11DesfazerActionPerformed
         // Botão desfazer
-            try {
-                  Gerente.undo();
-             } catch (Exception ex) {
-             }
+        try {
+            Gerente.undo();
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jMenuItem11DesfazerActionPerformed
 
     private void jMenuItem12RefazerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12RefazerActionPerformed
         // Botão refazer
-            try {
-                 Gerente.redo();
-           } catch (Exception ex) {
-           }
+        try {
+            Gerente.redo();
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jMenuItem12RefazerActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // botão novo 
-         new visor().setVisible(true);
+        new visor().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2AbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2AbrirActionPerformed
@@ -467,27 +537,26 @@ public class visor extends javax.swing.JFrame {
                 JFileChooser abrir = new JFileChooser();
                 abrir.setCurrentDirectory(null);
                 abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
-                 int retorno =  abrir.showOpenDialog(this);   
+                int retorno =  abrir.showOpenDialog(this);   
              
-                 FileReader fr = new FileReader(abrir.getSelectedFile()); 
+                FileReader fr = new FileReader(abrir.getSelectedFile()); 
       
-                 BufferedReader br = new BufferedReader(fr); 
-                 String linha; 
-                 StringBuffer sb = new StringBuffer(); 
-                 while((linha = br.readLine()) != null) { 
-                     sb.append(linha).append("\n"); 
-                 } 
-                 fr.close(); 
-                 nome=abrir.getSelectedFile().getName();
-                 caminho=abrir.getSelectedFile().getPath();
+                BufferedReader br = new BufferedReader(fr); 
+                String linha; 
+                StringBuffer sb = new StringBuffer(); 
+                while((linha = br.readLine()) != null) { 
+                    sb.append(linha).append("\n"); 
+                } 
+                fr.close(); 
+                nome=abrir.getSelectedFile().getName();
+                caminho=abrir.getSelectedFile().getPath();
                 
-                 tasalvo = true;
-                 taaberto =true;
+                tasalvo = true;
+                taaberto =true;
           
-                 jTextPane1.setText(sb.toString()); 
-               //  jTextPane1.add(" ", this);
+                jTextPane1.setText(sb.toString()); 
                
-           
+                         
             }catch(Exception erro) {
         
             }
@@ -496,48 +565,48 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem3SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3SalvarActionPerformed
         // botão salvar
         
-         JFileChooser sc = new JFileChooser();
+        JFileChooser sc = new JFileChooser();
         File nov; 
         
         if(tasalvo==false){
-             int retorno = sc.showSaveDialog(this);   
+            int retorno = sc.showSaveDialog(this);   
         
-             if(retorno!=JFileChooser.APPROVE_OPTION){
-                 return;
-             }
-             nov=sc.getSelectedFile();
+            if(retorno!=JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            nov=sc.getSelectedFile();
              
-             caminho=nov.getPath();
+            caminho=nov.getPath();
            
             tasalvo= true;
             try {
-                 String t1 = jTextPane1.getText();
+                String t1 = jTextPane1.getText();
                   
-                 BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
-                 grava1.write(t1.toString());
-                 grava1.close();
+                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
+                grava1.write(t1.toString());
+                grava1.close();
                
                   
             }catch(Exception erro) {
         
     
             }
-       }
+        }
             
         if(taaberto==true){
             
-                 try {
+                try {
                     
-                       File out2= new File(caminho);
+                    File out2= new File(caminho);
                      
-                       String t2 = jTextPane1.getText();
+                    String t2 = jTextPane1.getText();
                    
-                       PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
+                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
              
-                       grava1.flush();
-                       grava1.print(t2);
+                    grava1.flush();
+                    grava1.print(t2);
                       
-                       grava1.close(); 
+                    grava1.close(); 
                     
         
                 }catch(Exception erro) {    
@@ -546,17 +615,17 @@ public class visor extends javax.swing.JFrame {
        
         else{
                
-                 try {
+                try {
                        
-                       File out = new File(caminho);
+                    File out = new File(caminho);
                
-                       String t1 = jTextPane1.getText();
+                    String t1 = jTextPane1.getText();
                 
-                       PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
+                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
               
-                       grava1.print(t1);
+                    grava1.print(t1);
                   
-                       grava1.close(); 
+                    grava1.close(); 
                      
         
                 }catch(Exception erro) {
@@ -569,7 +638,7 @@ public class visor extends javax.swing.JFrame {
         // Botão salvar como
         
         
-         JFileChooser salvar = new JFileChooser();
+        JFileChooser salvar = new JFileChooser();
         int retorno= salvar.showSaveDialog(this);
          
         if(retorno!=JFileChooser.APPROVE_OPTION){
@@ -584,177 +653,166 @@ public class visor extends javax.swing.JFrame {
             grava.close();
         }catch(Exception erro) {
         
-    }
+        }
         
     }//GEN-LAST:event_jMenuItem4SalvarcomoActionPerformed
 
     private void jMenuItem5SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5SairActionPerformed
         // Botão sair
-         System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem5SairActionPerformed
 
     private void jMenuItem10ColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ColarActionPerformed
         // Botão colar
-         JTextPane colar = jTextPane1; 
-         colar.paste();
+        JTextPane colar = jTextPane1; 
+        colar.paste();
     }//GEN-LAST:event_jMenuItem10ColarActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // Botão compilar
         
         
-         JFileChooser sc = new JFileChooser();
+        JFileChooser sc = new JFileChooser();
         File nov; 
         
         if(tasalvo==false){
-             int retorno = sc.showSaveDialog(this);   
+            int retorno = sc.showSaveDialog(this);   
         
-             if(retorno!=JFileChooser.APPROVE_OPTION){
-                 return;
-             }
-             nov=sc.getSelectedFile();
+            if(retorno!=JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            nov=sc.getSelectedFile();
              
-             caminho=nov.getPath();
+            caminho=nov.getPath();
            
             tasalvo= true;
             try {
-                 String t1 = jTextPane1.getText();
+                String t1 = jTextPane1.getText();
                   
-                 BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
-                 grava1.write(t1.toString());
-                 grava1.close();
+                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
+                grava1.write(t1.toString());
+                grava1.close();
                
                   
             }catch(Exception erro) {
         
     
             }
-       }
+        }
             
         if(taaberto==true){
             
-                 try {
+            try {
                     
-                       File out2= new File(caminho);
+                File out2= new File(caminho);
                      
-                       String t2 = jTextPane1.getText();
+                String t2 = jTextPane1.getText();
                    
-                       PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
+                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
              
-                       grava1.flush();
-                       grava1.print(t2);
+                grava1.flush();
+                grava1.print(t2);
                       
-                       grava1.close(); 
+                grava1.close(); 
                     
         
-                }catch(Exception erro) {    
-                }
+            }catch(Exception erro) {    
+            }
         }
        
         else{
                
-                 try {
+            try {
                        
-                       File out = new File(caminho);
+                File out = new File(caminho);
                
-                       String t1 = jTextPane1.getText();
+                String t1 = jTextPane1.getText();
                 
-                       PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
+                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
               
-                       grava1.print(t1);
+                grava1.print(t1);
                   
-                       grava1.close(); 
+                grava1.close(); 
                      
         
-                }catch(Exception erro) {
+            }catch(Exception erro) {
                
-               }
+            }
         }
-        
-        
-        
-        
-        
-        
-         try{
-             String con2 = " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
-             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
-             p.waitFor();
+               
+                      
+        try{
+            String con2 = " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
+            Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
+            p.waitFor();
 
             if(p.exitValue()==0){
-                  String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
-                  FileReader fr = new FileReader( v); 
+                String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
+                FileReader fr = new FileReader( v); 
       
-                  BufferedReader br = new BufferedReader(fr); 
-                  String linha; 
-                  StringBuffer sb = new StringBuffer(); 
-            while((linha = br.readLine()) != null) { 
-                  sb.append(linha).append("\n"); 
-        } 
-     br.close();  
-     fr.close();   
-     String a = sb.toString() ;
+                BufferedReader br = new BufferedReader(fr); 
+                String linha; 
+                StringBuffer sb = new StringBuffer(); 
+                while((linha = br.readLine()) != null) { 
+                    sb.append(linha).append("\n"); 
+                }    
+                br.close();  
+                fr.close();   
+                String a = sb.toString() ;
 
 
-    if(a == null || a.trim().isEmpty()) {
-        // jTextPane2.setText("compilação terminada com sucesso ");
-        //jTextPane2.setText("");
-         colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
-         compilado = true;
-    }else {
-        // jTextPane2.setText(sb.toString()); 
-         // jTextPane2.setText("");
-          colorir(jTextPane2,a , Color.RED);
-          compilado = false;
-        }
-    }
-     }catch(Exception ex) {
-         ex.printStackTrace();
+                if(a == null || a.trim().isEmpty()) {
+                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
+                    compilado = true;
+                }else {
+                    colorir(jTextPane2,a , Color.RED);
+                    compilado = false;
+                }
+            }       
+        }catch(Exception ex) {
+            ex.printStackTrace();
      
-       }
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // Botão executar
       
         if(compilado == true) {
-        try {
+            try {
            
-             String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
-             Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
+                String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
+                Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
-             p.waitFor();
-  
-     
-            if(p.exitValue()==0){
-                String k= " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && start kkk.bat";
-                Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
-                p2.waitFor();
- 
-            }
+                p.waitFor();
       
-       }catch(Exception ex) {
-              ex.printStackTrace();
-          }
-        } else {
-         //   jTextPane2.setText("");
-            colorir(jTextPane2, "o código não foi compilaado ou apresenta erros ", Color.RED);
-          }
+                if(p.exitValue()==0){
+                    String k= " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && start kkk.bat";
+                    Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
+                    p2.waitFor();
+ 
+                }
+      
+            }catch(Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {   
+               colorir(jTextPane2, "o código não foi compilaado ou apresenta erros ", Color.RED);
+        }
         
-       // System.out.println("funciona");
-     // jTextPane2.setFont(new java.awt.Font("sansserif", 1, 20));  
+     
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // Botão recortar
         
         JTextPane recortar = jTextPane1; 
-         recortar.cut();
+        recortar.cut();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // botão selecionar tudo
-      jTextPane1.selectAll();
+        jTextPane1.selectAll();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jTextPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyPressed
@@ -763,33 +821,32 @@ public class visor extends javax.swing.JFrame {
 
     private void jTextPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyTyped
         // Botão de eventos
-    
-        
+   
     }//GEN-LAST:event_jTextPane1KeyTyped
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // Aumentar o tamanho da fonte
-                           
-                 aumentar  =  font.getSize();
-                 aumentar =  aumentar + 2;
-                 font = new Font("Dialog", Font.BOLD, aumentar);              
-                 jTextPane1.setFont( font);
+                 
+        aumentar  =  font.getSize(); 
+        aumentar =  aumentar + 2;
+        font = new Font("Dialog", Font.PLAIN, aumentar);              
+        jTextPane1.setFont( font);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // Botão diminuir fonte
         
-                 diminuir =  font.getSize();
-                 diminuir =  diminuir - 2;
-                 font = new Font("Dialog", Font.BOLD, diminuir);
-                 jTextPane1.setFont( font);
+        diminuir =  font.getSize();
+        diminuir =  diminuir - 2;
+        font = new Font("Dialog", Font.PLAIN, diminuir);
+        jTextPane1.setFont( font);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // fonte normal
                        
-                 font = new Font("Dialog", Font.BOLD, 12);      
-                 jTextPane1.setFont( font);
+        font = new Font("Dialog", Font.PLAIN, 12);      
+        jTextPane1.setFont( font);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
     
     /**
