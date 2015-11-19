@@ -62,7 +62,7 @@ public class visor extends javax.swing.JFrame {
         
          
         
-        //setExtendedState(MAXIMIZED_BOTH); // tela cheia
+      
         initComponents();
         
             jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
@@ -136,11 +136,7 @@ public class visor extends javax.swing.JFrame {
                             {
                                 setCharacterAttributes(inp, fimp - inp, verde , false);
                             }
-                            /*else if  (text.substring(inp, fimp).matches("\"*")) 
-                            {
-                             
-                               setCharacterAttributes(inp, fimp - inp, amarelo , false);
-                            }*/
+                           
                             else
                             {
                               setCharacterAttributes(inp, fimp - inp, preto, false);
@@ -196,11 +192,7 @@ public class visor extends javax.swing.JFrame {
                                             {
                                                 setCharacterAttributes(inp, fimp - inp, verde , false);
                                             }
-                                           /* else if  (text.substring(inp, fimp).matches("\"*")) 
-                                            {
-                             
-                                                setCharacterAttributes(inp, fimp - inp, amarelo , false);
-                                            }*/
+                                         
                                             else
                                             {
                                                 setCharacterAttributes(inp, fimp - inp, preto, false);
