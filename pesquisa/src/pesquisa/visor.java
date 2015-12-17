@@ -40,6 +40,7 @@ public class visor extends javax.swing.JFrame {
     Font font =  new Font("Dialog", Font.PLAIN, 12);
     private boolean compilado;
     private boolean hastring;
+    private boolean hablocoComentado;
     private boolean sobrescrever;
     private boolean tasalvo;
     private boolean taaberto;
@@ -56,6 +57,7 @@ public class visor extends javax.swing.JFrame {
         tasalvo = false;
         taaberto=false;
         hastring = false;
+        hablocoComentado=false;
         compilado = false;
         sobrescrever= false;
         Gerente = new UndoManager();
@@ -109,6 +111,7 @@ public class visor extends javax.swing.JFrame {
         final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.YELLOW);
         final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
+        final  AttributeSet vermelho = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.RED);
         final AttributeSet preto = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
         DefaultStyledDocument doc = new DefaultStyledDocument() {
             public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
@@ -148,7 +151,8 @@ public class visor extends javax.swing.JFrame {
                     }
                         int z = text.length();
     
-                        int cont =0,f=0,e=0;
+                        int cont =0,f=0,e=0,aux=0,g=0,h=0,inc=0,finc=0,contfimc=0;
+                        boolean duplabarra =false,coment=false;
                         for(int i =0;i<z; i++){
            
            
@@ -170,6 +174,61 @@ public class visor extends javax.swing.JFrame {
                                 }
                             }
                         }
+                        // daqui 
+                        try {
+                            if(z>=3){
+                                for(int i =0;i<z; i++){
+                            
+                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
+                              
+                                     
+                                     duplabarra= true;
+                                        if( duplabarra == true ){
+                                            g=i;
+                                            System.out.println( "saindo "+g);
+                                        }   
+                                    }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
+                                       h=i;
+                                        System.out.println( "saindo h "+h);
+                                        duplabarra = false;
+                                        setCharacterAttributes(g, h-g+1, vermelho, false);
+                                    }
+                            
+                                }    
+                                
+                                 for(int i =0;i<z; i++){
+                            
+                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
+                                            
+                                      aux ++;
+                                      coment = true;
+                                      if( aux==1){
+                                        inc=i;
+                          
+                                      }  
+                                    }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
+                                        finc=i;
+                         
+                                        if(coment == true){
+                                            setCharacterAttributes(inc,finc-inc+2, vermelho, false);
+                                            aux=0;
+                                            coment=false;
+                                            hablocoComentado=true;
+                                        }
+                                    }
+                            
+                                }     
+                            } 
+                            //EX:
+                          /*  int i5;
+                             /*int i35;
+                              /*int i55;
+                               int i45;*/
+                             //int i335;*/
+                        }catch (Exception ex) {
+                        }
+                        // ate aqui
+                        
                         if(hastring==true){
                            
                             final int indice = text.indexOf("\"");
@@ -204,8 +263,8 @@ public class visor extends javax.swing.JFrame {
                                 }
                                     int z2 = text.length();
     
-                                    int cont2 =0,f2=0,e2=0;
-                       
+                                    int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
+                                       boolean duplabarra2 =false,coment2=false;
                                     for(int i =0;i<z2; i++){
            
                                         if(text.charAt(i)=='\"') {
@@ -227,6 +286,141 @@ public class visor extends javax.swing.JFrame {
                                             }
                           
                                         }
+                                    }
+                                      // daqui 
+                        /*try {
+                            if(z>=3){
+                                for(int i =0;i<z; i++){
+                            
+                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
+                              
+                                     
+                                     duplabarra2= true;
+                                        if( duplabarra2 == true ){
+                                            g2=i;
+                                            System.out.println( "saindo "+g);
+                                        }   
+                                    }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
+                                       h2=i;
+                                        System.out.println( "saindo h "+h);
+                                        duplabarra2 = false;
+                                        setCharacterAttributes(g2, h2-g2+1, vermelho, false);
+                                    }
+                            
+                                }    
+                                
+                                 for(int i =0;i<z; i++){
+                            
+                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
+                                            
+                                      aux2 ++;
+                                      coment2 = true;
+                                      if( aux2==1){
+                                        inc2=i;
+                          
+                                      }  
+                                    }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
+                                        finc2=i;
+                         
+                                        if(coment2 == true){
+                                            setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
+                                           aux2=0;
+                                            coment2=false;
+                                        }
+                                    }
+                            
+                                }     
+                            } 
+                            //EX:
+                        
+                        }catch (Exception ex) {
+                        }*/
+                        }
+                        
+                        if( hablocoComentado=true){
+                           
+                            final int indice = text.indexOf("\\*");
+                 
+                            x = indice;
+                            if (x < 0) x = 0;
+                                y= text.length();
+                                inp = x;
+                                fimp = x;
+           
+                                while (fimp <= y) {
+                     
+                                    if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
+						
+                                          if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, azul, false);
+                                            }
+                                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, verde , false);
+                                            }
+                                         
+                                            else
+                                            {
+                                                setCharacterAttributes(inp, fimp - inp, preto, false);
+                          
+                                            }
+                                            inp = fimp;
+                                    }
+                                    fimp++;
+                                }
+                                    int z2 = text.length();
+    
+                                    int aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
+                                       boolean duplabarra2 =false,coment2=false;
+                                    
+                                      // daqui 
+                                    try {
+                                        if(z>=3){
+                                            for(int i =0;i<z; i++){
+                            
+                                                if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
+                              
+                                     
+                                                    duplabarra2= true;
+                                                    if( duplabarra2 == true ){
+                                                        g2=i;
+                                                        System.out.println( "saindo "+g);
+                                                    }              
+                                                }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
+                                                    h2=i;
+                                                    System.out.println( "saindo h "+h);
+                                                    duplabarra2 = false;
+                                                    setCharacterAttributes(g2, h2-g2+1, vermelho, false);
+                                                }
+                            
+                                            }    
+                                
+                                            for(int i =0;i<z; i++){
+                            
+                                                if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
+                                            
+                                                    aux2 ++;
+                                                    coment2 = true;
+                                                    if( aux2==1){
+                                                        inc2=i;
+                          
+                                                    }  
+                                                }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
+                                                    finc2=i;
+                         
+                                                    if(coment2 == true){
+                                                        setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
+                                                        aux2=0;
+                                                        coment2=false;
+                                                    }
+                                                }
+                            
+                                            }     
+                                        } 
+                           
+                        
+                                    }catch (Exception ex) {
                                     }
                         }
             }            
