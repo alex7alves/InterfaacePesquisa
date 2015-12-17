@@ -174,7 +174,7 @@ public class visor extends javax.swing.JFrame {
                                 }
                             }
                         }
-                        // daqui 
+                        
                         try {
                             if(z>=3){
                                 for(int i =0;i<z; i++){
@@ -219,15 +219,10 @@ public class visor extends javax.swing.JFrame {
                             
                                 }     
                             } 
-                            //EX:
-                          /*  int i5;
-                             /*int i35;
-                              /*int i55;
-                               int i45;*/
-                             //int i335;*/
+                        
                         }catch (Exception ex) {
                         }
-                        // ate aqui
+                        
                         
                         if(hastring==true){
                            
@@ -287,54 +282,7 @@ public class visor extends javax.swing.JFrame {
                           
                                         }
                                     }
-                                      // daqui 
-                        /*try {
-                            if(z>=3){
-                                for(int i =0;i<z; i++){
-                            
-                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
-                              
-                                     
-                                     duplabarra2= true;
-                                        if( duplabarra2 == true ){
-                                            g2=i;
-                                            System.out.println( "saindo "+g);
-                                        }   
-                                    }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
-                                       h2=i;
-                                        System.out.println( "saindo h "+h);
-                                        duplabarra2 = false;
-                                        setCharacterAttributes(g2, h2-g2+1, vermelho, false);
-                                    }
-                            
-                                }    
-                                
-                                 for(int i =0;i<z; i++){
-                            
-                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
-                                            
-                                      aux2 ++;
-                                      coment2 = true;
-                                      if( aux2==1){
-                                        inc2=i;
-                          
-                                      }  
-                                    }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
-                                        finc2=i;
                          
-                                        if(coment2 == true){
-                                            setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
-                                           aux2=0;
-                                            coment2=false;
-                                        }
-                                    }
-                            
-                                }     
-                            } 
-                            //EX:
-                        
-                        }catch (Exception ex) {
-                        }*/
                         }
                         
                         if( hablocoComentado=true){
@@ -374,7 +322,7 @@ public class visor extends javax.swing.JFrame {
                                     int aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
                                        boolean duplabarra2 =false,coment2=false;
                                     
-                                      // daqui 
+                                    
                                     try {
                                         if(z>=3){
                                             for(int i =0;i<z; i++){
