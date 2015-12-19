@@ -174,46 +174,47 @@ public class visor extends javax.swing.JFrame {
                                 }
                             }
                         }
-                        
+                      
                         try {
                             if(z>=3){
-                                for(int i =0;i<z; i++){
+                                for(int j=0;j<z; j++){
                             
-                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
+                                    if(text.charAt(j)=='/'&& text.charAt(j+1)=='/' ) {
                               
                                      
-                                     duplabarra= true;
+                                        duplabarra= true;
                                         if( duplabarra == true ){
-                                            g=i;
+                                            g=j;
                                            
                                         }   
-                                    }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
-                                       h=i;
+                                    }else if(text.charAt(j)=='\n' &&  duplabarra == true ) {
+                                        h=j;
                                         
                                         duplabarra = false;
                                         setCharacterAttributes(g, h-g+1, vermelho, false);
                                     }
                             
                                 }    
-                                
-                                 for(int i =0;i<z; i++){
                             
-                                    if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
+                                for(int i3 =0;i3<z; i3++){
+                            
+                                    if(text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
                                             
                                       aux ++;
                                       coment = true;
                                       if( aux==1){
-                                        inc=i;
+                                        inc=i3;
                           
                                       }  
-                                    }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
-                                        finc=i;
+                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
+                                        finc=i3;
                          
                                         if(coment == true){
                                             setCharacterAttributes(inc,finc-inc+2, vermelho, false);
                                             aux=0;
                                             coment=false;
                                             hablocoComentado=true;
+                                           
                                         }
                                     }
                             
@@ -222,12 +223,13 @@ public class visor extends javax.swing.JFrame {
                         
                         }catch (Exception ex) {
                         }
+                      
                         
                         
-                        if(hastring==true){
+                        if(hastring==true ||  hablocoComentado==true){
                            
-                            final int indice = text.indexOf("\"");
-                 
+                        
+                              final int indice=0;  
                             x = indice;
                             if (x < 0) x = 0;
                                 y= text.length();
@@ -260,20 +262,20 @@ public class visor extends javax.swing.JFrame {
     
                                     int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
                                     boolean duplabarra2 =false,coment2=false;
-                                    for(int i =0;i<z2; i++){
+                                    for(int i4 =0;i4<z2; i4++){
            
-                                        if(text.charAt(i)=='\"') {
+                                        if(text.charAt(i4)=='\"') {
              
                                             cont2++;
                              
                                             if(cont2 ==1) {
-                                                f2=i;
+                                                f2=i4;
                                      
                                     
                                             }
                      
                                             else if(cont2 ==2) {
-                                                e2=i;
+                                                e2=i4;
                            
                                                 setCharacterAttributes(f2, e2-f2+1, amarelo, false);
                                                 cont2=0;
@@ -282,95 +284,57 @@ public class visor extends javax.swing.JFrame {
                           
                                         }
                                     }
-                         
-                        }
-                        
-                        if( hablocoComentado=true){
-                           
-                            final int indice = text.indexOf("\\*");
-                 
-                            x = indice;
-                            if (x < 0) x = 0;
-                                y= text.length();
-                                inp = x;
-                                fimp = x;
-           
-                                while (fimp <= y) {
-                     
-                                    if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
-						
-                                          if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
-                                            {
-                                                setCharacterAttributes(inp, fimp - inp, azul, false);
-                                            }
-                                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
-                                            {
-                                                setCharacterAttributes(inp, fimp - inp, verde , false);
-                                            }
-                                         
-                                            else
-                                            {
-                                                setCharacterAttributes(inp, fimp - inp, preto, false);
-                          
-                                            }
-                                            inp = fimp;
-                                    }
-                                    fimp++;
-                                }
-                                    int z2 = text.length();
-    
-                                    int aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
-                                    boolean duplabarra2 =false,coment2=false;
-                                    
-                                    
-                                    try {
-                                        if(z>=3){
-                                            for(int i =0;i<z; i++){
+                                     try {
+                            if(z2>=3){
+                                for(int j =0;j<z2; j++){
                             
-                                                if(text.charAt(i)=='/'&& text.charAt(i+1)=='/' ) {
+                                    if(text.charAt(j)=='/'&& text.charAt(j+1)=='/' ) {
                               
                                      
-                                                    duplabarra2= true;
-                                                    if( duplabarra2 == true ){
-                                                        g2=i;
-                                                       
-                                                    }              
-                                                }else if(text.charAt(i)=='\n' &&  duplabarra == true) {
-                                                    h2=i;
-                                                   
-                                                    duplabarra2 = false;
-                                                    setCharacterAttributes(g2, h2-g2+1, vermelho, false);
-                                                }
-                            
-                                            }    
-                                
-                                            for(int i =0;i<z; i++){
-                            
-                                                if(text.charAt(i)=='/'&& text.charAt(i+1)=='*' ) {
-                                            
-                                                    aux2 ++;
-                                                    coment2 = true;
-                                                    if( aux2==1){
-                                                        inc2=i;
-                          
-                                                    }  
-                                                }else if(text.charAt(i)=='*' && text.charAt(i+1)=='/' ) {
-                                                    finc2=i;
-                         
-                                                    if(coment2 == true){
-                                                        setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
-                                                        aux2=0;
-                                                        coment2=false;
-                                                    }
-                                                }
-                            
-                                            }     
-                                        } 
-                           
-                        
-                                    }catch (Exception ex) {
+                                        duplabarra2= true;
+                                        if( duplabarra2 == true ){
+                                            g2=j;
+                                           
+                                        }   
+                                    }else if(text.charAt(j)=='\n' &&  duplabarra2 == true) {
+                                        h2=j;
+                                        
+                                        duplabarra2 = false;
+                                        setCharacterAttributes(g2, h2-g2+1, vermelho, false);
                                     }
+                            
+                                }    
+                                
+                                 for(int i3 =0;i3<z2; i3++){
+                            
+                                    if(text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
+                                            
+                                      aux2 ++;
+                                      coment2 = true;
+                                      if( aux2==1){
+                                        inc2=i3;
+                          
+                                      }  
+                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
+                                        finc2=i3;
+                         
+                                        if(coment2 == true){
+                                            setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
+                                            aux2=0;
+                                            coment2=false;
+                                            hablocoComentado=true;
+                                        }
+                                    }
+                            
+                                }     
+                            } 
+                        
+                        }catch (Exception ex) {
                         }
+                       }    
+                        
+                        
+                      
             }            
         };
   
