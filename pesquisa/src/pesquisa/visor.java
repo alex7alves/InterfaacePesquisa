@@ -152,7 +152,7 @@ public class visor extends javax.swing.JFrame {
                         int z = text.length();
     
                         int cont=0,f=0,e=0,aux=0,g=0,h=0,inc=0,finc=0,contfimc=0;
-                        boolean duplabarra =false,coment=false;
+                        boolean duplabarra =false,coment=false, aspas1=false, aspas2=false;
                         for(int i =0;i<z; i++){
            
            
@@ -198,17 +198,24 @@ public class visor extends javax.swing.JFrame {
                             
                                 for(int i3 =0;i3<z; i3++){
                             
-                                    if(text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
+                                    if( text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
                                             
                                       aux ++;
                                       coment = true;
                                       if( aux==1){
                                         inc=i3;
+                                        if(text.charAt(i3-1)=='\"' ){
+                                            aspas1 =true;
                           
-                                      }  
-                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
+                                        }
+                                      }
+                                    
+                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/') {
                                         finc=i3;
-                         
+                                       if(text.charAt(i3+2)=='\"'){
+                                            aspas2=true;
+                                        }
+                                        if(aspas1!= true && aspas2 != true ){
                                         if(coment == true){
                                             setCharacterAttributes(inc,finc-inc+2, vermelho, false);
                                             aux=0;
@@ -216,6 +223,12 @@ public class visor extends javax.swing.JFrame {
                                             hablocoComentado=true;
                                            
                                         }
+                                        
+                                    }
+                                    }else {
+                                        
+                                        aspas1=false;
+                                        aspas2=false;
                                     }
                             
                                 }     
@@ -226,7 +239,7 @@ public class visor extends javax.swing.JFrame {
                       
                         
                         
-                        if(hastring==true ||  hablocoComentado==true){
+                       if(hastring==true ||  hablocoComentado==true){
                            
                         
                               final int indice=0;  
@@ -261,7 +274,7 @@ public class visor extends javax.swing.JFrame {
                                     int z2 = text.length();
     
                                     int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
-                                    boolean duplabarra2 =false,coment2=false;
+                                    boolean duplabarra2 =false,coment2=false,aspas21=false,aspas22=false;
                                     for(int i4 =0;i4<z2; i4++){
            
                                         if(text.charAt(i4)=='\"') {
@@ -313,17 +326,25 @@ public class visor extends javax.swing.JFrame {
                                       coment2 = true;
                                       if( aux2==1){
                                         inc2=i3;
+                                         if(text.charAt(i3-1)=='\"' ){
+                                            aspas21 =true;
                           
+                                        }
                                       }  
                                     }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
                                         finc2=i3;
-                         
+                                       if(aspas21!= true && aspas22 != true ){
                                         if(coment2 == true){
                                             setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
                                             aux2=0;
                                             coment2=false;
                                             hablocoComentado=true;
                                         }
+                                      }else {
+                                        
+                                        aspas21=false;
+                                       aspas22=false;
+                                     }
                                     }
                             
                                 }     
@@ -331,7 +352,7 @@ public class visor extends javax.swing.JFrame {
                         
                         }catch (Exception ex) {
                         }
-                       }    
+                       }   
                         
                         
                       
