@@ -790,6 +790,7 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // Botão compilar
         
+       
         
         JFileChooser sc = new JFileChooser();
         File nov; 
@@ -859,14 +860,15 @@ public class visor extends javax.swing.JFrame {
             }
         }
                
-                      
+                   
         try{
-            String con2 = " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
+           // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
+            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
-
             if(p.exitValue()==0){
-                String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
+                //String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
+                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
                 FileReader fr = new FileReader( v); 
       
                 BufferedReader br = new BufferedReader(fr); 
@@ -878,8 +880,6 @@ public class visor extends javax.swing.JFrame {
                 br.close();  
                 fr.close();   
                 String a = sb.toString() ;
-
-
                 if(a == null || a.trim().isEmpty()) {
                     colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
                     compilado = true;
@@ -900,13 +900,14 @@ public class visor extends javax.swing.JFrame {
         if(compilado == true) {
             try {
            
-                String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
+                //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
+                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
       
                 if(p.exitValue()==0){
-                    String k= " cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && start kkk.bat";
+                    String k= " cd C:\\Portugol-IDE\\IDE\\portugol-master && start compilar.bat";
                     Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
                     p2.waitFor();
  
