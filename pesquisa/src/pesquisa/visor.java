@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -48,8 +49,8 @@ public class visor extends javax.swing.JFrame {
     private String caminho;
     private int aumentar,diminuir;
     UndoManager Gerente = new UndoManager();
-    StyledDocument documento = new DefaultStyledDocument();  
-
+  //  DefaultStyledDocument documento = new DefaultStyledDocument();  
+    Document documento ;  
 
     
     public visor() {
@@ -60,28 +61,40 @@ public class visor extends javax.swing.JFrame {
         hablocoComentado=false;
         compilado = false;
         sobrescrever= false;
-        Gerente = new UndoManager();
+       
         
          
         
       
         initComponents();
-        
-            jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
-                        public void undoableEditHappened(UndoableEditEvent e) {
-                            Gerente.addEdit(e.getEdit());
+          
+          /* Gerente = new UndoManager();
+        jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
+            public void undoableEditHappened(UndoableEditEvent e) {
+                Gerente.addEdit(e.getEdit());
                              
                                    
-                        }
-            });
+            }
+        });*/
+     
+        
            
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
          
        
-       
+      
         PalavraReservada();    
-    
+         Gerente = new UndoManager();
+         
+        documento.addUndoableEditListener(new UndoableEditListener() {
+            public void undoableEditHappened(UndoableEditEvent e) {
+                Gerente.addEdit(e.getEdit());
+                             
+                                   
+            }
+        });
+         jTextPane1.setDocument(documento) ; 
     }
     
      private int ultimo (String texto, int indice) {
@@ -108,6 +121,7 @@ public class visor extends javax.swing.JFrame {
         
         
         final StyleContext cont = StyleContext.getDefaultStyleContext();
+        
         final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.YELLOW);
         final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
@@ -133,11 +147,11 @@ public class visor extends javax.swing.JFrame {
 						
                             if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                             {
-                                setCharacterAttributes(inp, fimp - inp, azul, false);
+                                setCharacterAttributes(inp+1, fimp - inp, azul, false);
                             }
                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                             {
-                                setCharacterAttributes(inp, fimp - inp, verde , false);
+                                setCharacterAttributes(inp+1, fimp - inp, verde , false);
                             }
                            
                             else
@@ -242,7 +256,7 @@ public class visor extends javax.swing.JFrame {
                        if(hastring==true ||  hablocoComentado==true){
                            
                         
-                              final int indice=0;  
+                            final int indice=0;  
                             x = indice;
                             if (x < 0) x = 0;
                                 y= text.length();
@@ -255,11 +269,11 @@ public class visor extends javax.swing.JFrame {
 						
                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                                             {
-                                                setCharacterAttributes(inp, fimp - inp, azul, false);
+                                                setCharacterAttributes(inp+1, fimp - inp, azul, false);
                                             }
                                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                                             {
-                                                setCharacterAttributes(inp, fimp - inp, verde , false);
+                                                setCharacterAttributes(inp+1, fimp - inp, verde , false);
                                             }
                                          
                                             else
@@ -358,10 +372,10 @@ public class visor extends javax.swing.JFrame {
                       
             }            
         };
-  
+        documento =doc; 
         jTextPane1.setDocument(doc) ; 
              
-     
+    
     }
     
     
@@ -632,6 +646,7 @@ public class visor extends javax.swing.JFrame {
         // Botão desfazer
         try {
             Gerente.undo();
+            Gerente.undo();
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jMenuItem11DesfazerActionPerformed
@@ -639,6 +654,7 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem12RefazerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12RefazerActionPerformed
         // Botão refazer
         try {
+            Gerente.redo();
             Gerente.redo();
         } catch (Exception ex) {
         }
@@ -778,7 +794,8 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem5SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5SairActionPerformed
         // Botão sair
-        System.exit(0);
+        //  System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem5SairActionPerformed
 
     private void jMenuItem10ColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ColarActionPerformed
