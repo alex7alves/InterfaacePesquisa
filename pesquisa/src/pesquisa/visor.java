@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.event.UndoableEditEvent;
@@ -48,10 +50,12 @@ public class visor extends javax.swing.JFrame {
     private String nome;
     private String caminho;
     private int aumentar,diminuir;
-    UndoManager Gerente = new UndoManager();
-  //  DefaultStyledDocument documento = new DefaultStyledDocument();  
-    Document documento ;  
-
+  final UndoManager Gerente = new UndoManager();
+    private int cont_Lista_String,cont_aux;
+    private String[] StringArray_Lista;
+    private List lista = new ArrayList();
+    private List listaAux = new ArrayList();
+     private boolean desfazer,refazer,evento,OutroEvento;
     
     public visor() {
        
@@ -61,11 +65,12 @@ public class visor extends javax.swing.JFrame {
         hablocoComentado=false;
         compilado = false;
         sobrescrever= false;
-       
-        
-         
-        
-      
+       // cont_Lista_String=0;
+        desfazer=true;
+        refazer=true;
+        evento=true;
+        OutroEvento=false;
+        cont_aux=0;
         initComponents();
           
           /* Gerente = new UndoManager();
@@ -84,17 +89,12 @@ public class visor extends javax.swing.JFrame {
          
        
       
-        PalavraReservada();    
-         Gerente = new UndoManager();
+       PalavraReservada();    
+        
          
-        documento.addUndoableEditListener(new UndoableEditListener() {
-            public void undoableEditHappened(UndoableEditEvent e) {
-                Gerente.addEdit(e.getEdit());
-                             
-                                   
-            }
-        });
-         jTextPane1.setDocument(documento) ; 
+   
+       
+       
     }
     
      private int ultimo (String texto, int indice) {
@@ -148,10 +148,12 @@ public class visor extends javax.swing.JFrame {
                             if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                             {
                                 setCharacterAttributes(inp+1, fimp - inp, azul, false);
+                                 
                             }
                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                             {
                                 setCharacterAttributes(inp+1, fimp - inp, verde , false);
+                                
                             }
                            
                             else
@@ -184,7 +186,7 @@ public class visor extends javax.swing.JFrame {
                                     setCharacterAttributes(f, e-f+1, amarelo, false);
                                     cont=0;
                                     hastring= true;
-                                  
+                                 
                                 }
                             }
                         }
@@ -206,6 +208,7 @@ public class visor extends javax.swing.JFrame {
                                         
                                         duplabarra = false;
                                         setCharacterAttributes(g, h-g+1, vermelho, false);
+                                         
                                     }
                             
                                 }    
@@ -270,109 +273,116 @@ public class visor extends javax.swing.JFrame {
                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                                             {
                                                 setCharacterAttributes(inp+1, fimp - inp, azul, false);
+                                               
                                             }
                                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                                             {
                                                 setCharacterAttributes(inp+1, fimp - inp, verde , false);
+                                          
                                             }
                                          
                                             else
                                             {
                                                 setCharacterAttributes(inp, fimp - inp, preto, false);
-                          
+                                               
                                             }
                                             inp = fimp;
                                     }
                                     fimp++;
                                 }
-                                    int z2 = text.length();
+                                int z2 = text.length();
     
-                                    int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
-                                    boolean duplabarra2 =false,coment2=false,aspas21=false,aspas22=false;
-                                    for(int i4 =0;i4<z2; i4++){
+                                int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
+                                boolean duplabarra2 =false,coment2=false,aspas21=false,aspas22=false;
+                                for(int i4 =0;i4<z2; i4++){
            
-                                        if(text.charAt(i4)=='\"') {
+                                    if(text.charAt(i4)=='\"') {
              
-                                            cont2++;
+                                        cont2++;
                              
-                                            if(cont2 ==1) {
-                                                f2=i4;
+                                        if(cont2 ==1) {
+                                            f2=i4;
                                      
                                     
-                                            }
-                     
-                                            else if(cont2 ==2) {
-                                                e2=i4;
-                           
-                                                setCharacterAttributes(f2, e2-f2+1, amarelo, false);
-                                                cont2=0;
-                                
-                                            }
-                          
                                         }
+                     
+                                        else if(cont2 ==2) {
+                                         e2=i4;
+                           
+                                        setCharacterAttributes(f2, e2-f2+1, amarelo, false);
+                                        cont2=0;
+                                                 
+                                        }
+                          
                                     }
-                                     try {
-                            if(z2>=3){
-                                for(int j =0;j<z2; j++){
+                                }
+                                    
+                                try {
+                                    if(z2>=3){
+                                        for(int j =0;j<z2; j++){
                             
-                                    if(text.charAt(j)=='/'&& text.charAt(j+1)=='/' ) {
+                                            if(text.charAt(j)=='/'&& text.charAt(j+1)=='/' ) {
                               
                                      
-                                        duplabarra2= true;
-                                        if( duplabarra2 == true ){
-                                            g2=j;
+                                            duplabarra2= true;
+                                            if( duplabarra2 == true ){
+                                                    g2=j;
                                            
-                                        }   
-                                    }else if(text.charAt(j)=='\n' &&  duplabarra2 == true) {
-                                        h2=j;
+                                            }   
+                                            }else if(text.charAt(j)=='\n' &&  duplabarra2 == true) {
+                                                h2=j;
                                         
-                                        duplabarra2 = false;
-                                        setCharacterAttributes(g2, h2-g2+1, vermelho, false);
-                                    }
+                                                duplabarra2 = false;
+                                                setCharacterAttributes(g2, h2-g2+1, vermelho, false);
+                                       
+                                            }
                             
-                                }    
+                                        }    
                                 
-                                 for(int i3 =0;i3<z2; i3++){
+                                        for(int i3 =0;i3<z2; i3++){
                             
-                                    if(text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
+                                            if(text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
                                             
-                                      aux2 ++;
-                                      coment2 = true;
-                                      if( aux2==1){
-                                        inc2=i3;
-                                         if(text.charAt(i3-1)=='\"' ){
-                                            aspas21 =true;
+                                                aux2 ++;
+                                                coment2 = true;
+                                                if( aux2==1){
+                                                    inc2=i3;
+                                                    if(text.charAt(i3-1)=='\"' ){
+                                                        aspas21 =true;
                           
-                                        }
-                                      }  
-                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
-                                        finc2=i3;
-                                       if(aspas21!= true && aspas22 != true ){
-                                        if(coment2 == true){
-                                            setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
-                                            aux2=0;
-                                            coment2=false;
-                                            hablocoComentado=true;
-                                        }
-                                      }else {
+                                                    }
+                                                }  
+                                            }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/' ) {
+                                                finc2=i3;
+                                                if(aspas21!= true && aspas22 != true ){
+                                                    if(coment2 == true){
+                                                        setCharacterAttributes(inc2,finc2-inc2+2, vermelho, false);
+                                                        aux2=0;
+                                                        coment2=false;
+                                                        hablocoComentado=true;
+                                            
+                                                    }
+                                                }else{
                                         
-                                        aspas21=false;
-                                       aspas22=false;
-                                     }
-                                    }
+                                                    aspas21=false;
+                                                    aspas22=false;
+                                                }
+                                            }
                             
-                                }     
-                            } 
+                                        }  
+                                
+                                    } 
                         
-                        }catch (Exception ex) {
-                        }
-                       }   
+                        
+                                }catch (Exception ex) {
+                                }
+                        }   
                         
                         
                       
             }            
         };
-        documento =doc; 
+   
         jTextPane1.setDocument(doc) ; 
              
     
@@ -435,9 +445,21 @@ public class visor extends javax.swing.JFrame {
 
         jLabel1.setText("Saida");
 
+        jTextPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTextPane1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextPane1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextPane1KeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextPane1KeyTyped(evt);
@@ -517,7 +539,7 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem10Colar);
 
-        jMenuItem11Desfazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem11Desfazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         jMenuItem11Desfazer.setText("Desfazer");
         jMenuItem11Desfazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -526,7 +548,7 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem11Desfazer);
 
-        jMenuItem12Refazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem12Refazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
         jMenuItem12Refazer.setText("Refazer");
         jMenuItem12Refazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -644,18 +666,26 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem11DesfazerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11DesfazerActionPerformed
         // Botão desfazer
-        try {
-            Gerente.undo();
-            Gerente.undo();
+        try {  
+            int h,h2;  
+            h= lista.size();       
+            String s = lista.remove(h-1).toString();
+            listaAux.add(s);
+            h2= lista.size();
+            jTextPane1.setText(lista.get(h2-1).toString());
         } catch (Exception ex) {
         }
+       
     }//GEN-LAST:event_jMenuItem11DesfazerActionPerformed
 
     private void jMenuItem12RefazerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12RefazerActionPerformed
         // Botão refazer
         try {
-            Gerente.redo();
-            Gerente.redo();
+            int re1,re2;
+               
+            re1= listaAux.size();
+            jTextPane1.setText(listaAux.get(re1-1).toString());
+            listaAux.remove(re1-1).toString();
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jMenuItem12RefazerActionPerformed
@@ -954,11 +984,27 @@ public class visor extends javax.swing.JFrame {
 
     private void jTextPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyPressed
         // TODO add your handling code here:
+        // System.out.println("algo foi escrit");
+    
     }//GEN-LAST:event_jTextPane1KeyPressed
 
     private void jTextPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyTyped
         // Botão de eventos
-   
+       
+        String st1,st2;
+        st1="";
+        if(evento==true){
+            lista.add("");
+            st1= jTextPane1.getText();
+            evento = false;
+        }
+        
+        st2= jTextPane1.getText();
+        if(st1.equals(st2) == false){
+            lista.add(jTextPane1.getText());
+          
+        }
+       
     }//GEN-LAST:event_jTextPane1KeyTyped
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -985,6 +1031,14 @@ public class visor extends javax.swing.JFrame {
         font = new Font("Dialog", Font.PLAIN, 12);      
         jTextPane1.setFont( font);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextPane1KeyReleased
+
+    private void jTextPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextPane1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextPane1AncestorAdded
     
     /**
      * @param args the command line arguments
