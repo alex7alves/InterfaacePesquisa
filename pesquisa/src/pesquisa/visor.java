@@ -50,13 +50,14 @@ public class visor extends javax.swing.JFrame {
     private String nome;
     private String caminho;
     private int aumentar,diminuir;
-  final UndoManager Gerente = new UndoManager();
+    final UndoManager Gerente = new UndoManager();
     private int cont_Lista_String,cont_aux;
     private String[] StringArray_Lista;
     private List lista = new ArrayList();
     private List listaAux = new ArrayList();
-     private boolean desfazer,refazer,evento,OutroEvento;
-    
+    private boolean desfazer,refazer,evento,OutroEvento;
+    private boolean naopode;
+    private  String naopermite = "'!@#$%¨&*()/\\"; 
     public visor() {
        
         tasalvo = false;
@@ -71,6 +72,7 @@ public class visor extends javax.swing.JFrame {
         evento=true;
         OutroEvento=false;
         cont_aux=0;
+        naopode =false;
         initComponents();
           
           /* Gerente = new UndoManager();
@@ -143,16 +145,44 @@ public class visor extends javax.swing.JFrame {
 
   
                     while (fimp <= y) {
-                        if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
-						
+                            if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
+                                if(inp==0) {
+                                    for(int i=0; i<naopermite.length();i++){
+                                        if( text.charAt(0)!=naopermite.charAt(i)){
+                                        
+                                        }
+                                        else{
+                                            naopode=true;
+                                        } 
+                                    }
+                                } 				
                             if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                             {
-                                setCharacterAttributes(inp+1, fimp - inp, azul, false);
+                               
+                                if(inp==0 && naopode==false){
+                                    setCharacterAttributes(inp, fimp - inp, azul, false);
+                                
+                                
+                                }else {
+                                    setCharacterAttributes(inp+1, fimp - inp, azul, false);
+                                    naopode=false;
+                                }
+                                        
+                                   
                                  
                             }
                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                             {
-                                setCharacterAttributes(inp+1, fimp - inp, verde , false);
+                                if(inp==0 && naopode==false){
+                                    setCharacterAttributes(inp, fimp - inp, verde, false);
+                                
+                                
+                                }else {
+                                    setCharacterAttributes(inp+1, fimp - inp, verde, false);
+                                    naopode=false;
+                                }
+
+                                
                                 
                             }
                            
@@ -269,15 +299,38 @@ public class visor extends javax.swing.JFrame {
                                 while (fimp <= y) {
                      
                                     if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
-						
-                                          if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                                            if(inp==0) {
+                                                for(int i=0; i<naopermite.length();i++){
+                                                    if( text.charAt(0)!=naopermite.charAt(i)){
+                                        
+                                                    }
+                                                    else{
+                                                        naopode=true;
+                                                    } 
+                                                }
+                                            } 
+                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
                                             {
-                                                setCharacterAttributes(inp+1, fimp - inp, azul, false);
+                                                if(inp==0 && naopode==false){
+                                                        setCharacterAttributes(inp, fimp - inp, azul, false);
+                                
+                                
+                                                }else {
+                                                        setCharacterAttributes(inp+1, fimp - inp,azul, false);
+                                                        naopode=false;
+                                                }
                                                
                                             }
                                             else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
                                             {
-                                                setCharacterAttributes(inp+1, fimp - inp, verde , false);
+                                                    if(inp==0 && naopode==false){
+                                                        setCharacterAttributes(inp, fimp - inp, verde, false);
+                                
+                                
+                                                    }else {
+                                                        setCharacterAttributes(inp+1, fimp - inp, verde, false);
+                                                        naopode=false;
+                                                    }
                                           
                                             }
                                          
