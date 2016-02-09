@@ -592,7 +592,7 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem10Colar);
 
-        jMenuItem11Desfazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItem11Desfazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
         jMenuItem11Desfazer.setText("Desfazer");
         jMenuItem11Desfazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -601,7 +601,7 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem11Desfazer);
 
-        jMenuItem12Refazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        jMenuItem12Refazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
         jMenuItem12Refazer.setText("Refazer");
         jMenuItem12Refazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
