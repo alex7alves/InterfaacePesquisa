@@ -738,7 +738,8 @@ public class visor extends javax.swing.JFrame {
                
             re1= listaAux.size();
             jTextPane1.setText(listaAux.get(re1-1).toString());
-            listaAux.remove(re1-1).toString();
+            String l = listaAux.remove(re1-1).toString();
+            lista.add(l);
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jMenuItem12RefazerActionPerformed
