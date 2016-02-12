@@ -52,13 +52,14 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     private static final long serialVersionUID = 1;  
   
     public final static float LEFT = 0.0f;  
-    public final static float CENTER = 0.5f;  
-    public final static float RIGHT = 1.0f;  
+    public final static float CENTER = 0.0f;  
+    public final static float RIGHT = 0.0f;  
   
-    private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);  
-  
+   private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);  
+    //private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.yellow);
+   // Está ligado ao numero de linhas 
     private final static int HEIGHT = Integer.MAX_VALUE - 1000000;  
-  
+  // private final static int HEIGHT = Integer.MAX_VALUE - 1;  
     // Text component this TextTextLineNumber component is in sync with  
     private JTextComponent component;  
   
@@ -83,9 +84,10 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
      * 
      * @param component 
      *            the related text component 
-     */  
+     */ 
+    // altera a largura
     public TextLineNumber(JTextComponent component) {  
-        this(component, 3);  
+        this(component, 4);  
     }  
   
     /** 
@@ -100,9 +102,11 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     public TextLineNumber(JTextComponent component, int minimumDisplayDigits) {  
         this.component = component;  
         setFont(component.getFont());  
+        // tambem altera a largura
         setBorderGap(5);  
         setCurrentLineForeground(Color.RED);  
         setDigitAlignment(RIGHT);  
+        //setDigitAlignment(LEFT); 
         setMinimumDisplayDigits(minimumDisplayDigits);  
         component.getDocument().addDocumentListener(this);  
         component.addCaretListener(this);  
@@ -196,7 +200,8 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
      *            the Color used to render the current line 
      */  
     public void setDigitAlignment(float digitAlignment) {  
-        this.digitAlignment = digitAlignment > 1.0f ? 1.0f : digitAlignment < 0.0f ? -1.0f : digitAlignment;  
+       this.digitAlignment = digitAlignment > 1.0f ? 1.0f : digitAlignment < 0.0f ? -1.0f : digitAlignment;  
+    
     }  
   
     /** 
@@ -227,6 +232,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
         Element root = component.getDocument().getDefaultRootElement();  
         int lines = root.getElementCount();  
         int digits = Math.max(String.valueOf(lines).length(), minimumDisplayDigits);  
+        
         // Update sizes when number of digits in the line number changes  
         if (lastDigits != digits) {  
             lastDigits = digits;  
@@ -237,6 +243,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
   
             Dimension d = getPreferredSize();  
             d.setSize(preferredWidth, HEIGHT);  
+           // d.setSize(30, HEIGHT);  
             setPreferredSize(d);  
             setSize(d);  
         }  
@@ -252,6 +259,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
         FontMetrics fontMetrics = component.getFontMetrics(component.getFont());  
         Insets insets = getInsets();  
         int availableWidth = getSize().width - insets.left - insets.right;  
+       
         // Determine the rows to draw within the clipped bounds.  
         Rectangle clip = g.getClipBounds();  
         int rowStartOffset = component.viewToModel(new Point(0, clip.y));  
@@ -315,6 +323,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
         // Get the bounding rectangle of the row  
         Rectangle r = component.modelToView(rowStartOffset);  
         int lineHeight = fontMetrics.getHeight();  
+       // int lineHeight = 30;  
         int y = r.y + r.height;  
         int descent = 0;  
         // The text needs to be positioned above the bottom of the bounding  
@@ -332,10 +341,12 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
                 AttributeSet as = child.getAttributes();  
                 String fontFamily = (String) as.getAttribute(StyleConstants.FontFamily);  
                 Integer fontSize = (Integer) as.getAttribute(StyleConstants.FontSize);  
+               //Integer fontSize =30;
                 String key = fontFamily + fontSize;  
                 FontMetrics fm = fonts.get(key);  
                 if (fm == null) {  
-                    Font font = new Font(fontFamily, Font.PLAIN, fontSize);  
+                    Font font = new Font(fontFamily, Font.PLAIN, fontSize); 
+                  //  Font font = new Font(fontFamily, Font.PLAIN, 200);  
                     fm = component.getFontMetrics(font);  
                     fonts.put(key, fm);  
                 }  
