@@ -41,7 +41,7 @@ public class visor extends javax.swing.JFrame {
     private boolean taaberto;
     private String nome;
     private String caminho;
-    private int aumentar,diminuir;
+    public int aumentar,diminuir;
     final UndoManager Gerente = new UndoManager();
     private int cont_Lista_String,cont_aux;
     private String[] StringArray_Lista;
@@ -690,7 +690,7 @@ public class visor extends javax.swing.JFrame {
         st2= jTextPane1.getText();
         if(st1.equals(st2) == false){
             lista.add(jTextPane1.getText());
-           System.out.println(" nova fonte "+ aumentar);
+          // System.out.println(" nova fonte "+ aumentar);
         }
       
     }//GEN-LAST:event_jTextPane1KeyTyped
@@ -702,6 +702,8 @@ public class visor extends javax.swing.JFrame {
         aumentar =  aumentar + 2;
         font = new Font("Dialog", Font.PLAIN, aumentar);              
         jTextPane1.setFont( font);
+        TextLineNumber conl = new TextLineNumber(jTextPane1);
+        jScrollPane3.setRowHeaderView(conl);  
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -711,6 +713,8 @@ public class visor extends javax.swing.JFrame {
         diminuir =  diminuir - 2;
         font = new Font("Dialog", Font.PLAIN, diminuir);
         jTextPane1.setFont( font);
+         TextLineNumber conl = new TextLineNumber(jTextPane1);        
+        jScrollPane3.setRowHeaderView(conl);  
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -718,6 +722,8 @@ public class visor extends javax.swing.JFrame {
                        
         font = new Font("Dialog", Font.PLAIN, 12);      
         jTextPane1.setFont( font);
+         TextLineNumber conl = new TextLineNumber(jTextPane1); 
+        jScrollPane3.setRowHeaderView(conl);  
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
