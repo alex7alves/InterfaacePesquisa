@@ -21,6 +21,8 @@ public class ColorePane {
    private boolean hastring;
    private boolean hablocoComentado;
    private boolean naopode;
+   int  x2 ;
+   DefaultStyledDocument doc2;
    private  String naopermite = "'!@#$%¨&*()/\\";  
    public ColorePane() {
        
@@ -49,12 +51,10 @@ public class ColorePane {
         }
         return indice;
     }
-    
-    
+  
    void  PalavraReservada(final JTextPane pane ){
-        
-        
-        final StyleContext cont = StyleContext.getDefaultStyleContext();
+    
+       final StyleContext cont = StyleContext.getDefaultStyleContext();
         
         final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.YELLOW);
@@ -88,7 +88,7 @@ public class ColorePane {
                                         } 
                                     }
                                 } 				
-                            if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                            if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|bool|verdadeiro|falso|ou)"))
                             {
                                
                                 if(inp==0 && naopode==false){
@@ -241,7 +241,7 @@ public class ColorePane {
                                                     } 
                                                 }
                                             } 
-                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto)"))
+                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|bool|verdadeiro|falso|ou)"))
                                             {
                                                 if(inp==0 && naopode==false){
                                                         setCharacterAttributes(inp, fimp - inp, azul, false);
@@ -367,7 +367,7 @@ public class ColorePane {
                       
             }            
         };
-   
+       
         pane.setDocument(doc) ; 
              
     
