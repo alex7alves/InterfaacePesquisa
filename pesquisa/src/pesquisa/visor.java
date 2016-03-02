@@ -154,6 +154,7 @@ public class visor extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTextPane1);
 
+        jTextPane2.setEditable(false);
         jTextPane2.setMaximumSize(new java.awt.Dimension(1440, 500));
         jScrollPane1.setViewportView(jTextPane2);
 
