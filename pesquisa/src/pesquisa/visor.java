@@ -161,6 +161,7 @@ public class visor extends javax.swing.JFrame {
         jMenu1.setText("Arquivo");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/page_white_add.png"))); // NOI18N
         jMenuItem1.setText("Novo");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,6 +171,7 @@ public class visor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2Abrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2Abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder_page.png"))); // NOI18N
         jMenuItem2Abrir.setText("Abrir");
         jMenuItem2Abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,6 +181,7 @@ public class visor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2Abrir);
 
         jMenuItem3Salvar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3Salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/disk.png"))); // NOI18N
         jMenuItem3Salvar.setText("Salvar");
         jMenuItem3Salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +191,7 @@ public class visor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3Salvar);
 
         jMenuItem4Salvarcomo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem4Salvarcomo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/disk_multiple.png"))); // NOI18N
         jMenuItem4Salvarcomo.setText("Salvar como");
         jMenuItem4Salvarcomo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,6 +201,7 @@ public class visor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4Salvarcomo);
 
         jMenuItem5Sair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5Sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/bomb.png"))); // NOI18N
         jMenuItem5Sair.setText("Sair");
         jMenuItem5Sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +215,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.setText("Editar");
 
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/book_next.png"))); // NOI18N
         jMenuItem9.setText("Copiar");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +225,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.add(jMenuItem9);
 
         jMenuItem10Colar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem10Colar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/book_edit.png"))); // NOI18N
         jMenuItem10Colar.setText("Colar");
         jMenuItem10Colar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +235,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.add(jMenuItem10Colar);
 
         jMenuItem11Desfazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        jMenuItem11Desfazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/arrow_turn_left.png"))); // NOI18N
         jMenuItem11Desfazer.setText("Desfazer");
         jMenuItem11Desfazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,6 +245,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.add(jMenuItem11Desfazer);
 
         jMenuItem12Refazer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        jMenuItem12Refazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/arrow_turn_right.png"))); // NOI18N
         jMenuItem12Refazer.setText("Refazer");
         jMenuItem12Refazer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,6 +255,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.add(jMenuItem12Refazer);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/cut_red.png"))); // NOI18N
         jMenuItem2.setText("Recortar");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +265,7 @@ public class visor extends javax.swing.JFrame {
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/book_open.png"))); // NOI18N
         jMenuItem3.setText("Selecionar tudo");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,9 +274,11 @@ public class visor extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lightbulb.png"))); // NOI18N
         jMenu4.setText("Fonte");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/magnifier_zoom_in.png"))); // NOI18N
         jMenuItem4.setText("Aumentar a fonte");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,6 +288,7 @@ public class visor extends javax.swing.JFrame {
         jMenu4.add(jMenuItem4);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/magifier_zoom_out.png"))); // NOI18N
         jMenuItem5.setText("Diminuir a fonte");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,6 +298,7 @@ public class visor extends javax.swing.JFrame {
         jMenu4.add(jMenuItem5);
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/accept.png"))); // NOI18N
         jMenuItem10.setText("Tamanho normal");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,6 +314,7 @@ public class visor extends javax.swing.JFrame {
         jMenu3.setText("Compilar");
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/cog.png"))); // NOI18N
         jMenuItem6.setText("Compilar");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,6 +324,7 @@ public class visor extends javax.swing.JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/resultset_next.png"))); // NOI18N
         jMenuItem7.setText("Executar");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
