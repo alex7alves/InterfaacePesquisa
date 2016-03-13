@@ -8,12 +8,15 @@ package pesquisa;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -73,7 +76,10 @@ public class visor extends javax.swing.JFrame {
         jScrollPane3.setRowHeaderView(contadorLinhas);  
           
         ColorePane cp = new ColorePane();
-        cp.PalavraReservada(jTextPane1);    
+        cp.PalavraReservada(jTextPane1);  
+        URL pegaImagem = this.getClass().getResource("Apps-Path-icon.png");
+        Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
+        this.setIconImage(imagem);
     }
     
     private void colorir(JTextPane tp, String msg, Color c)
