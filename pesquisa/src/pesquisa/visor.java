@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AttributeSet;
@@ -161,7 +162,7 @@ public class visor extends javax.swing.JFrame {
         if(taaberto==true){
             
             try {
-                    
+                 
                 File out2= new File(caminho);
                      
                 String t2 = jTextPane1.getText();
@@ -200,6 +201,7 @@ public class visor extends javax.swing.JFrame {
                
                    
         try{
+      
            // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
             String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
@@ -218,7 +220,9 @@ public class visor extends javax.swing.JFrame {
                 br.close();  
                 fr.close();   
                 String a = sb.toString() ;
+               
                 if(a == null || a.trim().isEmpty()) {
+                  
                     colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
                     compilado = true;
                 }else {
@@ -318,7 +322,52 @@ public class visor extends javax.swing.JFrame {
         
         }
     }
-     
+    public void Executar(){
+         if(compilado == true) {
+            try {
+           
+                //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
+                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
+        
+                p.waitFor();
+      
+                if(p.exitValue()==0){
+                    String k= " cd C:\\Portugol-IDE\\IDE\\portugol-master && start compilar.bat";
+                    Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
+                    p2.waitFor();
+ 
+                }
+      
+            }catch(Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {   
+               colorir(jTextPane2, "o código não foi compilaado ou apresenta erros ", Color.RED);
+        }
+    }
+    public void Aumentar(){
+        aumentar  =  font.getSize(); 
+        aumentar =  aumentar + 2;
+        font = new Font("Dialog", Font.PLAIN, aumentar);              
+        jTextPane1.setFont( font);             
+        jTextPane2.setFont(font);
+        TextLineNumber conl = new TextLineNumber(jTextPane1);
+        jScrollPane3.setRowHeaderView(conl);  
+    }
+    public void Diminuir(){
+        diminuir =  font.getSize();
+        diminuir =  diminuir - 2;
+        font = new Font("Dialog", Font.PLAIN, diminuir);
+        jTextPane1.setFont( font);
+        jTextPane2.setFont(font);
+        TextLineNumber conl = new TextLineNumber(jTextPane1);        
+        jScrollPane3.setRowHeaderView(conl);  
+    }
+    public void BordaLabel(JLabel jb){
+        jb.setBorder(BorderFactory.createLineBorder(Color.black)); // seta borda preta
+        jb.setBorder(BorderFactory.createRaisedBevelBorder());    // eleva borda para cima
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -429,6 +478,12 @@ public class visor extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel6MouseExited(evt);
+            }
         });
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Actions-document-save-all-icon.png"))); // NOI18N
@@ -436,6 +491,12 @@ public class visor extends javax.swing.JFrame {
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel5MouseExited(evt);
             }
         });
 
@@ -445,6 +506,12 @@ public class visor extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
+            }
         });
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/cog-icon.png"))); // NOI18N
@@ -452,6 +519,12 @@ public class visor extends javax.swing.JFrame {
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel8MouseExited(evt);
             }
         });
 
@@ -461,6 +534,12 @@ public class visor extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel9MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel9MouseExited(evt);
+            }
         });
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Zoom-Out-icon.png"))); // NOI18N
@@ -468,6 +547,12 @@ public class visor extends javax.swing.JFrame {
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel10MouseExited(evt);
             }
         });
 
@@ -663,11 +748,11 @@ public class visor extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
@@ -747,14 +832,11 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem3SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3SalvarActionPerformed
         // botão salvar
-        
        Salvar();
     }//GEN-LAST:event_jMenuItem3SalvarActionPerformed
 
     private void jMenuItem4SalvarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4SalvarcomoActionPerformed
         // Botão salvar como
-        
-        
        SalvarComo();
         
     }//GEN-LAST:event_jMenuItem4SalvarcomoActionPerformed
@@ -773,38 +855,13 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // Botão compilar
-        
-       
        Compilar();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // Botão executar
       
-        if(compilado == true) {
-            try {
-           
-                //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
-                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
-                Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
-        
-                p.waitFor();
-      
-                if(p.exitValue()==0){
-                    String k= " cd C:\\Portugol-IDE\\IDE\\portugol-master && start compilar.bat";
-                    Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
-                    p2.waitFor();
- 
-                }
-      
-            }catch(Exception ex) {
-                ex.printStackTrace();
-            }
-        } else {   
-               colorir(jTextPane2, "o código não foi compilaado ou apresenta erros ", Color.RED);
-        }
-        
-     
+        Executar();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -847,26 +904,13 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // Aumentar o tamanho da fonte
                  
-        aumentar  =  font.getSize(); 
-        aumentar =  aumentar + 2;
-        font = new Font("Dialog", Font.PLAIN, aumentar);              
-        jTextPane1.setFont( font);
-                    
-        jTextPane2.setFont(font);
-        TextLineNumber conl = new TextLineNumber(jTextPane1);
-        jScrollPane3.setRowHeaderView(conl);  
+       Aumentar();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // Botão diminuir fonte
         
-        diminuir =  font.getSize();
-        diminuir =  diminuir - 2;
-        font = new Font("Dialog", Font.PLAIN, diminuir);
-        jTextPane1.setFont( font);
-         jTextPane2.setFont(font);
-         TextLineNumber conl = new TextLineNumber(jTextPane1);        
-        jScrollPane3.setRowHeaderView(conl);  
+       Diminuir();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -874,8 +918,8 @@ public class visor extends javax.swing.JFrame {
                        
         font = new Font("Dialog", Font.PLAIN, 12);      
         jTextPane1.setFont( font);
-         jTextPane2.setFont(font);
-         TextLineNumber conl = new TextLineNumber(jTextPane1); 
+        jTextPane2.setFont(font);
+        TextLineNumber conl = new TextLineNumber(jTextPane1); 
         jScrollPane3.setRowHeaderView(conl);  
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
@@ -908,7 +952,8 @@ public class visor extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        // TODO add your handling code here:
+        // Aumentar fonte
+        Aumentar();
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -917,43 +962,96 @@ public class visor extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
+        // Imagem executar
+        Executar();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        // TODO add your handling code here:
+        // diminuir fonte
+        Diminuir();
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
         // da imagem novo
-        jLabel3.setForeground(Color.red);
-     
-           jLabel3.setBorder(BorderFactory.createLineBorder(Color.black)); // seta borda preta
-           jLabel3.setBorder(BorderFactory.createRaisedBevelBorder());    // eleva borda para cima
-        // afunda as bordas
-      //  jLabel3.setBorder(BorderFactory.createLoweredBevelBorder());
-           // realsa as bordas
-       // jLabel3.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+        BordaLabel(jLabel3);
      
     }//GEN-LAST:event_jLabel3MouseEntered
 
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
         // da imagem novo
         jLabel3.setBorder(null);
-          //   jLabel3.setBorder(BorderFactory.createRaisedBevelBorder());
     }//GEN-LAST:event_jLabel3MouseExited
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
         // Imagem abrir
+        BordaLabel(jLabel4);
         
-           jLabel4.setBorder(BorderFactory.createLineBorder(Color.black)); // seta borda preta
-           jLabel4.setBorder(BorderFactory.createRaisedBevelBorder());    // eleva borda para cima
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
         // imagem abrir 
          jLabel4.setBorder(null);
     }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+        // da imagem salvar
+        BordaLabel(jLabel6);
+    }//GEN-LAST:event_jLabel6MouseEntered
+
+    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
+        // da imagem salvar
+        jLabel6.setBorder(null);
+    }//GEN-LAST:event_jLabel6MouseExited
+
+    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+        // da imagem salvar como
+        BordaLabel(jLabel5);
+    }//GEN-LAST:event_jLabel5MouseEntered
+
+    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
+        // da imagem salvar como
+        jLabel5.setBorder(null);
+    }//GEN-LAST:event_jLabel5MouseExited
+
+    private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
+        // da imagem compilar
+        BordaLabel(jLabel8);
+    }//GEN-LAST:event_jLabel8MouseEntered
+
+    private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
+        // da imagem compilar
+        jLabel8.setBorder(null);
+    }//GEN-LAST:event_jLabel8MouseExited
+
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
+        // da imagem exeutar
+        BordaLabel(jLabel9);
+    }//GEN-LAST:event_jLabel9MouseEntered
+
+    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
+        // Da imagem exeutar
+        jLabel9.setBorder(null);
+    }//GEN-LAST:event_jLabel9MouseExited
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+        // da imagem aumentar
+        BordaLabel(jLabel7);
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+        // da imagem aumentar
+        jLabel7.setBorder(null);
+    }//GEN-LAST:event_jLabel7MouseExited
+
+    private void jLabel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseEntered
+        // da imagem diminuir
+        BordaLabel(jLabel10);
+    }//GEN-LAST:event_jLabel10MouseEntered
+
+    private void jLabel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseExited
+        // da imagem diminuir
+        jLabel10.setBorder(null);
+    }//GEN-LAST:event_jLabel10MouseExited
     
     /**
      * @param args the command line arguments
