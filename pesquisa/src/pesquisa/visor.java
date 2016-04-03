@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -94,7 +95,229 @@ public class visor extends javax.swing.JFrame {
         tp.setCharacterAttributes(aset, false);
         tp.setText(msg);
     }
-
+    
+    private void Abrir(){
+        // botão abrir
+        try {
+         
+                JFileChooser abrir = new JFileChooser();
+                abrir.setCurrentDirectory(null);
+                abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
+                int retorno =  abrir.showOpenDialog(this);   
+             
+                FileReader fr = new FileReader(abrir.getSelectedFile()); 
+      
+                BufferedReader br = new BufferedReader(fr); 
+                String linha; 
+                StringBuffer sb = new StringBuffer(); 
+                while((linha = br.readLine()) != null) { 
+                    sb.append(linha).append("\n"); 
+                } 
+                fr.close(); 
+                nome=abrir.getSelectedFile().getName();
+                caminho=abrir.getSelectedFile().getPath();
+                
+                tasalvo = true;
+                taaberto =true;
+          
+                jTextPane1.setText(sb.toString()); 
+               
+                         
+            }catch(Exception erro) {
+        
+            }
+    }
+    private void Compilar(){
+        // botão compilar
+         
+        JFileChooser sc = new JFileChooser();
+        File nov; 
+        
+        if(tasalvo==false){
+            int retorno = sc.showSaveDialog(this);   
+        
+            if(retorno!=JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            nov=sc.getSelectedFile();
+             
+            caminho=nov.getPath();
+           
+            tasalvo= true;
+            try {
+                String t1 = jTextPane1.getText();
+                  
+                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
+                grava1.write(t1.toString());
+                grava1.close();
+               
+                  
+            }catch(Exception erro) {
+        
+    
+            }
+        }
+            
+        if(taaberto==true){
+            
+            try {
+                    
+                File out2= new File(caminho);
+                     
+                String t2 = jTextPane1.getText();
+                   
+                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
+             
+                grava1.flush();
+                grava1.print(t2);
+                      
+                grava1.close(); 
+                    
+        
+            }catch(Exception erro) {    
+            }
+        }
+       
+        else{
+               
+            try {
+                       
+                File out = new File(caminho);
+               
+                String t1 = jTextPane1.getText();
+                
+                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
+              
+                grava1.print(t1);
+                  
+                grava1.close(); 
+                     
+        
+            }catch(Exception erro) {
+               
+            }
+        }
+               
+                   
+        try{
+           // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
+            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
+            Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
+            p.waitFor();
+            if(p.exitValue()==0){
+                //String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
+                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
+                FileReader fr = new FileReader( v); 
+      
+                BufferedReader br = new BufferedReader(fr); 
+                String linha; 
+                StringBuffer sb = new StringBuffer(); 
+                while((linha = br.readLine()) != null) { 
+                    sb.append(linha).append("\n"); 
+                }    
+                br.close();  
+                fr.close();   
+                String a = sb.toString() ;
+                if(a == null || a.trim().isEmpty()) {
+                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
+                    compilado = true;
+                }else {
+                    colorir(jTextPane2,a , Color.RED);
+                    compilado = false;
+                }
+            }       
+        }catch(Exception ex) {
+            ex.printStackTrace();
+     
+        }
+    }
+    private void Salvar(){
+        JFileChooser sc = new JFileChooser();
+        File nov; 
+        
+        if(tasalvo==false){
+            int retorno = sc.showSaveDialog(this);   
+        
+            if(retorno!=JFileChooser.APPROVE_OPTION){
+                return;
+            }
+            nov=sc.getSelectedFile();
+             
+            caminho=nov.getPath();
+           
+            tasalvo= true;
+            try {
+                String t1 = jTextPane1.getText();
+                  
+                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
+                grava1.write(t1.toString());
+                grava1.close();
+               
+                  
+            }catch(Exception erro) {
+        
+    
+            }
+        }
+            
+        if(taaberto==true){
+            
+                try {
+                    
+                    File out2= new File(caminho);
+                     
+                    String t2 = jTextPane1.getText();
+                   
+                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
+             
+                    grava1.flush();
+                    grava1.print(t2);
+                      
+                    grava1.close(); 
+                    
+        
+                }catch(Exception erro) {    
+                }
+        }
+       
+        else{
+               
+                try {
+                       
+                    File out = new File(caminho);
+               
+                    String t1 = jTextPane1.getText();
+                
+                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
+              
+                    grava1.print(t1);
+                  
+                    grava1.close(); 
+                     
+        
+                }catch(Exception erro) {
+               
+               }
+        }
+    }
+    private void SalvarComo(){
+        JFileChooser salvar = new JFileChooser();
+        int retorno= salvar.showSaveDialog(this);
+         
+        if(retorno!=JFileChooser.APPROVE_OPTION){
+            return;
+        }
+        File arquivo= salvar.getSelectedFile();
+        caminho = arquivo.getPath();
+        try {
+            String t = jTextPane1.getText();
+            BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
+            grava.write(t.toString());
+            grava.close();
+        }catch(Exception erro) {
+        
+        }
+    }
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,6 +333,14 @@ public class visor extends javax.swing.JFrame {
         jTextPane1 = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -163,6 +394,82 @@ public class visor extends javax.swing.JFrame {
         jTextPane2.setEditable(false);
         jTextPane2.setMaximumSize(new java.awt.Dimension(1440, 500));
         jScrollPane1.setViewportView(jTextPane2);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/page-add32b.png"))); // NOI18N
+        jLabel3.setToolTipText("Novo aruivo");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel3MouseExited(evt);
+            }
+        });
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/folder-page-icon.png"))); // NOI18N
+        jLabel4.setToolTipText("Abrir");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
+        });
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Save-icon.png"))); // NOI18N
+        jLabel6.setToolTipText("Salvar");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Actions-document-save-all-icon.png"))); // NOI18N
+        jLabel5.setToolTipText("Salvar como");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Zoom-In-icon.png"))); // NOI18N
+        jLabel7.setToolTipText("Aumentar fonte");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/cog-icon.png"))); // NOI18N
+        jLabel8.setToolTipText("Compilar");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/control-end-blue-icon.png"))); // NOI18N
+        jLabel9.setToolTipText("Executar");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Zoom-Out-icon.png"))); // NOI18N
+        jLabel10.setToolTipText("Diminuir fonte");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         jMenu1.setText("Arquivo");
 
@@ -347,21 +654,47 @@ public class visor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 514, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)))
+                .addGap(0, 164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -409,128 +742,20 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem2AbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2AbrirActionPerformed
         // botão abrir
-        try {
-         
-                JFileChooser abrir = new JFileChooser();
-                abrir.setCurrentDirectory(null);
-                abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
-                int retorno =  abrir.showOpenDialog(this);   
-             
-                FileReader fr = new FileReader(abrir.getSelectedFile()); 
-      
-                BufferedReader br = new BufferedReader(fr); 
-                String linha; 
-                StringBuffer sb = new StringBuffer(); 
-                while((linha = br.readLine()) != null) { 
-                    sb.append(linha).append("\n"); 
-                } 
-                fr.close(); 
-                nome=abrir.getSelectedFile().getName();
-                caminho=abrir.getSelectedFile().getPath();
-                
-                tasalvo = true;
-                taaberto =true;
-          
-                jTextPane1.setText(sb.toString()); 
-               
-                         
-            }catch(Exception erro) {
-        
-            }
+        Abrir();
     }//GEN-LAST:event_jMenuItem2AbrirActionPerformed
 
     private void jMenuItem3SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3SalvarActionPerformed
         // botão salvar
         
-        JFileChooser sc = new JFileChooser();
-        File nov; 
-        
-        if(tasalvo==false){
-            int retorno = sc.showSaveDialog(this);   
-        
-            if(retorno!=JFileChooser.APPROVE_OPTION){
-                return;
-            }
-            nov=sc.getSelectedFile();
-             
-            caminho=nov.getPath();
-           
-            tasalvo= true;
-            try {
-                String t1 = jTextPane1.getText();
-                  
-                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
-                grava1.write(t1.toString());
-                grava1.close();
-               
-                  
-            }catch(Exception erro) {
-        
-    
-            }
-        }
-            
-        if(taaberto==true){
-            
-                try {
-                    
-                    File out2= new File(caminho);
-                     
-                    String t2 = jTextPane1.getText();
-                   
-                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
-             
-                    grava1.flush();
-                    grava1.print(t2);
-                      
-                    grava1.close(); 
-                    
-        
-                }catch(Exception erro) {    
-                }
-        }
-       
-        else{
-               
-                try {
-                       
-                    File out = new File(caminho);
-               
-                    String t1 = jTextPane1.getText();
-                
-                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
-              
-                    grava1.print(t1);
-                  
-                    grava1.close(); 
-                     
-        
-                }catch(Exception erro) {
-               
-               }
-        }
+       Salvar();
     }//GEN-LAST:event_jMenuItem3SalvarActionPerformed
 
     private void jMenuItem4SalvarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4SalvarcomoActionPerformed
         // Botão salvar como
         
         
-        JFileChooser salvar = new JFileChooser();
-        int retorno= salvar.showSaveDialog(this);
-         
-        if(retorno!=JFileChooser.APPROVE_OPTION){
-            return;
-        }
-        File arquivo= salvar.getSelectedFile();
-        caminho = arquivo.getPath();
-        try {
-            String t = jTextPane1.getText();
-            BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
-            grava.write(t.toString());
-            grava.close();
-        }catch(Exception erro) {
-        
-        }
+       SalvarComo();
         
     }//GEN-LAST:event_jMenuItem4SalvarcomoActionPerformed
 
@@ -550,107 +775,7 @@ public class visor extends javax.swing.JFrame {
         // Botão compilar
         
        
-        
-        JFileChooser sc = new JFileChooser();
-        File nov; 
-        
-        if(tasalvo==false){
-            int retorno = sc.showSaveDialog(this);   
-        
-            if(retorno!=JFileChooser.APPROVE_OPTION){
-                return;
-            }
-            nov=sc.getSelectedFile();
-             
-            caminho=nov.getPath();
-           
-            tasalvo= true;
-            try {
-                String t1 = jTextPane1.getText();
-                  
-                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
-                grava1.write(t1.toString());
-                grava1.close();
-               
-                  
-            }catch(Exception erro) {
-        
-    
-            }
-        }
-            
-        if(taaberto==true){
-            
-            try {
-                    
-                File out2= new File(caminho);
-                     
-                String t2 = jTextPane1.getText();
-                   
-                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
-             
-                grava1.flush();
-                grava1.print(t2);
-                      
-                grava1.close(); 
-                    
-        
-            }catch(Exception erro) {    
-            }
-        }
-       
-        else{
-               
-            try {
-                       
-                File out = new File(caminho);
-               
-                String t1 = jTextPane1.getText();
-                
-                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
-              
-                grava1.print(t1);
-                  
-                grava1.close(); 
-                     
-        
-            }catch(Exception erro) {
-               
-            }
-        }
-               
-                   
-        try{
-           // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
-            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
-            Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
-            p.waitFor();
-            if(p.exitValue()==0){
-                //String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
-                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
-                FileReader fr = new FileReader( v); 
-      
-                BufferedReader br = new BufferedReader(fr); 
-                String linha; 
-                StringBuffer sb = new StringBuffer(); 
-                while((linha = br.readLine()) != null) { 
-                    sb.append(linha).append("\n"); 
-                }    
-                br.close();  
-                fr.close();   
-                String a = sb.toString() ;
-                if(a == null || a.trim().isEmpty()) {
-                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
-                    compilado = true;
-                }else {
-                    colorir(jTextPane2,a , Color.RED);
-                    compilado = false;
-                }
-            }       
-        }catch(Exception ex) {
-            ex.printStackTrace();
-     
-        }
+       Compilar();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -761,6 +886,74 @@ public class visor extends javax.swing.JFrame {
     private void jTextPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextPane1AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextPane1AncestorAdded
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // Imagem do novo 
+         new visor().setVisible(true);
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // Imagem abrir
+        Abrir();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // imagem salvar
+        Salvar();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // Imagem salvarComo
+        SalvarComo();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // Imagem compilar
+        Compilar();
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
+        // da imagem novo
+        jLabel3.setForeground(Color.red);
+     
+           jLabel3.setBorder(BorderFactory.createLineBorder(Color.black)); // seta borda preta
+           jLabel3.setBorder(BorderFactory.createRaisedBevelBorder());    // eleva borda para cima
+        // afunda as bordas
+      //  jLabel3.setBorder(BorderFactory.createLoweredBevelBorder());
+           // realsa as bordas
+       // jLabel3.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+     
+    }//GEN-LAST:event_jLabel3MouseEntered
+
+    private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
+        // da imagem novo
+        jLabel3.setBorder(null);
+          //   jLabel3.setBorder(BorderFactory.createRaisedBevelBorder());
+    }//GEN-LAST:event_jLabel3MouseExited
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+        // Imagem abrir
+        
+           jLabel4.setBorder(BorderFactory.createLineBorder(Color.black)); // seta borda preta
+           jLabel4.setBorder(BorderFactory.createRaisedBevelBorder());    // eleva borda para cima
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        // imagem abrir 
+         jLabel4.setBorder(null);
+    }//GEN-LAST:event_jLabel4MouseExited
     
     /**
      * @param args the command line arguments
@@ -799,6 +992,14 @@ public class visor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
