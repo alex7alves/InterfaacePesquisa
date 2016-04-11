@@ -306,8 +306,9 @@ public class visor extends javax.swing.JFrame {
     }
     private void SalvarComo(){
         JFileChooser salvar = new JFileChooser();
+        salvar.setDialogTitle("Salvar como");
         int retorno= salvar.showSaveDialog(this);
-         
+       
         if(retorno!=JFileChooser.APPROVE_OPTION){
             return;
         }
