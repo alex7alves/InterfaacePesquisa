@@ -327,7 +327,7 @@ public class visor extends javax.swing.JFrame {
             try {
            
                 //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
-                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "@SET PATH=%path%;\"C:\\Portugol-IDE\\IDE\\Executaveis\" && cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
