@@ -100,7 +100,7 @@ public class visor extends javax.swing.JFrame {
     private void Abrir(){
         // botão abrir
         try {
-         
+        
                 JFileChooser abrir = new JFileChooser();
                 abrir.setCurrentDirectory(null);
                 abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
@@ -120,9 +120,9 @@ public class visor extends javax.swing.JFrame {
                 
                 tasalvo = true;
                 taaberto =true;
-          
+                this.setTitle(nome+"- Portugol IDE");
                 jTextPane1.setText(sb.toString()); 
-               
+                colorir(jTextPane2,"", Color.RED);
                          
             }catch(Exception erro) {
         
@@ -314,11 +314,14 @@ public class visor extends javax.swing.JFrame {
         }
         File arquivo= salvar.getSelectedFile();
         caminho = arquivo.getPath();
+        nome=arquivo.getName();
         try {
             String t = jTextPane1.getText();
             BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
             grava.write(t.toString());
             grava.close();
+            this.setTitle(nome+"- Portugol IDE");
+            colorir(jTextPane2,"", Color.RED);
         }catch(Exception erro) {
         
         }
@@ -326,9 +329,10 @@ public class visor extends javax.swing.JFrame {
     public void Executar(){
          if(compilado == true) {
             try {
-           
+          
                 //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
-                String tudo = "@SET PATH=%path%;\"C:\\Portugol-IDE\\IDE\\Executaveis\" && cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+               // String tudo = "@SET PATH=%path%;\"C:\\Portugol-IDE\\IDE\\Executaveis\" && cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
@@ -344,7 +348,7 @@ public class visor extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         } else {   
-               colorir(jTextPane2, "o código não foi compilaado ou apresenta erros ", Color.RED);
+               colorir(jTextPane2, "O código não foi compilado ou apresenta erros ", Color.RED);
         }
     }
     public void Aumentar(){
@@ -414,18 +418,18 @@ public class visor extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Editor");
+        setTitle("Portugol IDE");
         setExtendedState(getExtendedState());
 
         jLabel1.setText("Saida");
 
         jTextPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextPane1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
