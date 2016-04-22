@@ -130,76 +130,9 @@ public class visor extends javax.swing.JFrame {
     }
     private void Compilar(){
         // botão compilar
-         
-        JFileChooser sc = new JFileChooser();
-        File nov; 
         
-        if(tasalvo==false){
-            int retorno = sc.showSaveDialog(this);   
+        Salvar();
         
-            if(retorno!=JFileChooser.APPROVE_OPTION){
-                return;
-            }
-            nov=sc.getSelectedFile();
-             
-            caminho=nov.getPath();
-           
-            tasalvo= true;
-            try {
-                String t1 = jTextPane1.getText();
-                  
-                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
-                grava1.write(t1.toString());
-                grava1.close();
-               
-                  
-            }catch(Exception erro) {
-        
-    
-            }
-        }
-            
-        if(taaberto==true){
-            
-            try {
-                 
-                File out2= new File(caminho);
-                     
-                String t2 = jTextPane1.getText();
-                   
-                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
-             
-                grava1.flush();
-                grava1.print(t2);
-                      
-                grava1.close(); 
-                    
-        
-            }catch(Exception erro) {    
-            }
-        }
-       
-        else{
-               
-            try {
-                       
-                File out = new File(caminho);
-               
-                String t1 = jTextPane1.getText();
-                
-                PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
-              
-                grava1.print(t1);
-                  
-                grava1.close(); 
-                     
-        
-            }catch(Exception erro) {
-               
-            }
-        }
-               
-                   
         try{
       
            // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
