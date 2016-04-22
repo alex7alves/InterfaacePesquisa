@@ -248,7 +248,8 @@ public class visor extends javax.swing.JFrame {
             nov=sc.getSelectedFile();
              
             caminho=nov.getPath();
-           
+            nome = nov.getName();
+            this.setTitle(nome+"- Portugol IDE");
             tasalvo= true;
             try {
                 String t1 = jTextPane1.getText();
