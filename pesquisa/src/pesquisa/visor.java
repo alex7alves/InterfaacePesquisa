@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AttributeSet;
@@ -67,7 +71,7 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
        
         initComponents();
-          
+        Fechar();
           /* Gerente = new UndoManager();
         jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
             public void undoableEditHappened(UndoableEditEvent e) {
@@ -97,6 +101,27 @@ public class visor extends javax.swing.JFrame {
         tp.setText(msg);
     }
     
+    public void Fechar(){
+        // desabilitando o x
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //  impelentando o x
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
+		if (retorno ==0){
+			Salvar(); 	
+                }
+                else if (retorno ==2){
+		 	
+                }
+                  else if (retorno ==1){
+		 	dispose();
+                }
+               
+            }
+        
+        });
+    }
     private void Abrir(){
         // botão abrir
         try {
@@ -782,8 +807,18 @@ public class visor extends javax.swing.JFrame {
 
     private void jMenuItem5SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5SairActionPerformed
         // Botão sair
-        //  System.exit(0);
-        this.dispose();
+       
+                int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
+		if (retorno ==0){
+			Salvar(); 	
+                }
+                else if (retorno ==2){
+		 	
+                }
+                  else if (retorno ==1){
+		 	dispose();
+                }
+               
     }//GEN-LAST:event_jMenuItem5SairActionPerformed
 
     private void jMenuItem10ColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ColarActionPerformed
