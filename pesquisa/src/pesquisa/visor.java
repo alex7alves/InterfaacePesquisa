@@ -161,30 +161,31 @@ public class visor extends javax.swing.JFrame {
                 abrir.setCurrentDirectory(null);
                 abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
                 int retorno =  abrir.showOpenDialog(this);   
-             
-                FileReader fr = new FileReader(abrir.getSelectedFile()); 
+                if(retorno == JFileChooser.APPROVE_OPTION){
+                    FileReader fr = new FileReader(abrir.getSelectedFile()); 
       
-                BufferedReader br = new BufferedReader(fr); 
-                String linha; 
-                StringBuffer sb = new StringBuffer(); 
-                while((linha = br.readLine()) != null) { 
+                    BufferedReader br = new BufferedReader(fr); 
+                    String linha; 
+                    StringBuffer sb = new StringBuffer(); 
+                    while((linha = br.readLine()) != null) { 
                     sb.append(linha).append("\n"); 
-                } 
-                fr.close(); 
-                nome=abrir.getSelectedFile().getName();
-                caminho=abrir.getSelectedFile().getPath();
+                    } 
+                    fr.close(); 
+                    nome=abrir.getSelectedFile().getName();
+                    caminho=abrir.getSelectedFile().getPath();
                
-                tasalvo = true;
-                taaberto =true;
-                this.setTitle(nome+"- Portugol IDE");
-                jTextPane1.setText(sb.toString()); 
-                 pegaAberto =  jTextPane1.getText();
-                 System.out.println(" ABERTO "+pegaAberto); 
-                colorir(jTextPane2,"", Color.RED);
-                         
+                    tasalvo = true;
+                    taaberto =true;
+                    this.setTitle(nome+"- Portugol IDE");
+                    jTextPane1.setText(sb.toString()); 
+                    pegaAberto =  jTextPane1.getText();
+                 
+                    colorir(jTextPane2,"", Color.RED);
+                }         
             }catch(Exception erro) {
         
             }
+        
     }
     private void Compilar(){
         // botão compilar
