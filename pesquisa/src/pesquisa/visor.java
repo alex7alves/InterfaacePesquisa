@@ -57,7 +57,8 @@ public class visor extends javax.swing.JFrame {
     private List lista = new ArrayList();
     private List listaAux = new ArrayList();
     private boolean desfazer,refazer,evento,OutroEvento;
-   
+    private String pegaAberto,PegaSalvo;
+    int flag=0;
     public visor() {
        
         tasalvo = false;
@@ -71,6 +72,11 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
        
         initComponents();
+       /* if(flag==0){
+           PegaSalvo=jTextPane1.getText(); 
+           pegaAberto=jTextPane1.getText(); 
+           flag=1;
+        }*/
         Fechar();
           /* Gerente = new UndoManager();
         jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
@@ -102,11 +108,33 @@ public class visor extends javax.swing.JFrame {
     }
     
     public void Fechar(){
-        // desabilitando o x
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+       
+      
+         
+        
         //  impelentando o x
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
+               System.out.println(" hey entrou  3"); 
+               String comparar ;
+                comparar = jTextPane1.getText();
+                 System.out.println(" compara "+ comparar); 
+        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
+                 System.out.println(" hey entrou 2"); 
+                 dispose();
+        }else {
+              /*  if(comparar.equals(PegaSalvo)==true || comparar.equals(pegaAberto)==true){
+                    
+                }
+               String comparar ;
+                comparar = jTextPane1.getText();
+                 System.out.println(" compara "+ comparar); 
+        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
+                 System.out.println(" hey entrou 2"); 
+        }
+                else {*/
+                     // desabilitando o x
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
 		if (retorno ==0){
 			Salvar(); 	
@@ -119,8 +147,11 @@ public class visor extends javax.swing.JFrame {
                 }
                
             }
-        
+            }// do else
+           // }
+       
         });
+        
     }
     private void Abrir(){
         // botão abrir
@@ -142,11 +173,13 @@ public class visor extends javax.swing.JFrame {
                 fr.close(); 
                 nome=abrir.getSelectedFile().getName();
                 caminho=abrir.getSelectedFile().getPath();
-                
+               
                 tasalvo = true;
                 taaberto =true;
                 this.setTitle(nome+"- Portugol IDE");
                 jTextPane1.setText(sb.toString()); 
+                 pegaAberto =  jTextPane1.getText();
+                 System.out.println(" ABERTO "+pegaAberto); 
                 colorir(jTextPane2,"", Color.RED);
                          
             }catch(Exception erro) {
@@ -215,7 +248,8 @@ public class visor extends javax.swing.JFrame {
                 BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
                 grava1.write(t1.toString());
                 grava1.close();
-               
+                PegaSalvo =  jTextPane1.getText();
+                    System.out.println(" pegasalvo 1 "+ PegaSalvo);
                   
             }catch(Exception erro) {
         
@@ -237,8 +271,8 @@ public class visor extends javax.swing.JFrame {
                     grava1.print(t2);
                       
                     grava1.close(); 
-                    
-        
+                    PegaSalvo =  jTextPane1.getText();
+                    System.out.println(" pegasalvo 2 "+ PegaSalvo);
                 }catch(Exception erro) {    
                 }
         }
@@ -256,8 +290,9 @@ public class visor extends javax.swing.JFrame {
                     grava1.print(t1);
                   
                     grava1.close(); 
-                     
-        
+                    PegaSalvo =  jTextPane1.getText(); 
+                    
+                    System.out.println(" pegasalvo 3 "+ PegaSalvo);
                 }catch(Exception erro) {
                
                }
@@ -281,6 +316,7 @@ public class visor extends javax.swing.JFrame {
             grava.close();
             this.setTitle(nome+"- Portugol IDE");
             colorir(jTextPane2,"", Color.RED);
+            PegaSalvo =  jTextPane1.getText();
         }catch(Exception erro) {
         
         }
