@@ -115,13 +115,13 @@ public class visor extends javax.swing.JFrame {
         //  impelentando o x
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-               System.out.println(" hey entrou  3"); 
+              
                String comparar ;
-                comparar = jTextPane1.getText();
-                 System.out.println(" compara "+ comparar); 
+               comparar = jTextPane1.getText();
+                
         if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
-                 System.out.println(" hey entrou 2"); 
-                 dispose();
+                
+                dispose();
         }else {
               /*  if(comparar.equals(PegaSalvo)==true || comparar.equals(pegaAberto)==true){
                     
@@ -250,7 +250,7 @@ public class visor extends javax.swing.JFrame {
                 grava1.write(t1.toString());
                 grava1.close();
                 PegaSalvo =  jTextPane1.getText();
-                    System.out.println(" pegasalvo 1 "+ PegaSalvo);
+                    
                   
             }catch(Exception erro) {
         
@@ -273,7 +273,7 @@ public class visor extends javax.swing.JFrame {
                       
                     grava1.close(); 
                     PegaSalvo =  jTextPane1.getText();
-                    System.out.println(" pegasalvo 2 "+ PegaSalvo);
+                   
                 }catch(Exception erro) {    
                 }
         }
@@ -293,7 +293,7 @@ public class visor extends javax.swing.JFrame {
                     grava1.close(); 
                     PegaSalvo =  jTextPane1.getText(); 
                     
-                    System.out.println(" pegasalvo 3 "+ PegaSalvo);
+                   
                 }catch(Exception erro) {
                
                }
@@ -845,6 +845,14 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem5SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5SairActionPerformed
         // Botão sair
        
+        String comparar ;
+        comparar = jTextPane1.getText();
+                
+        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
+                
+                dispose();
+        }else {
+           
                 int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
 		if (retorno ==0){
 			Salvar(); 	
@@ -852,9 +860,12 @@ public class visor extends javax.swing.JFrame {
                 else if (retorno ==2){
 		 	
                 }
-                  else if (retorno ==1){
+                else if (retorno ==1){
 		 	dispose();
                 }
+               
+            }
+            
                
     }//GEN-LAST:event_jMenuItem5SairActionPerformed
 
