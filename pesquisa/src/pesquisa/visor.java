@@ -119,7 +119,7 @@ public class visor extends javax.swing.JFrame {
                String comparar ;
                comparar = jTextPane1.getText();
                 
-        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
+        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true || evento==true){
                 
                 dispose();
         }else {
