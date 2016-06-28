@@ -70,7 +70,7 @@ public class visor extends javax.swing.JFrame {
         evento=true;
         OutroEvento=false;
         cont_aux=0;
-       
+        
         initComponents();
        /* if(flag==0){
            PegaSalvo=jTextPane1.getText(); 
@@ -86,7 +86,7 @@ public class visor extends javax.swing.JFrame {
         });*/
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
-          
+         
         ColorePane cp = new ColorePane();
         cp.PalavraReservada(jTextPane1);  
         URL pegaImagem = this.getClass().getResource("Apps-Path-icon.png");
@@ -848,7 +848,7 @@ public class visor extends javax.swing.JFrame {
         String comparar ;
         comparar = jTextPane1.getText();
                 
-        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
+        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true || evento==true){
                 
                 dispose();
         }else {
