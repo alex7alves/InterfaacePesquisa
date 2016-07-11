@@ -198,6 +198,7 @@ public class visor extends javax.swing.JFrame {
             String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
+         
             if(p.exitValue()==0){
                 //String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
                 String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
@@ -221,6 +222,35 @@ public class visor extends javax.swing.JFrame {
                     colorir(jTextPane2,a , Color.RED);
                     compilado = false;
                 }
+            
+            }else {
+                con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " 2> novo ";
+            Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
+            
+            p2.waitFor();
+           
+                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
+                FileReader fr = new FileReader( v); 
+     
+                BufferedReader br = new BufferedReader(fr); 
+                String linha; 
+                StringBuffer sb = new StringBuffer(); 
+                while((linha = br.readLine()) != null) { 
+                    sb.append(linha).append("\n"); 
+                }    
+                br.close();  
+                fr.close();   
+                String a = sb.toString() ;
+               
+                if(a == null || a.trim().isEmpty()) {
+                  
+                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
+                    compilado = true;
+                }else {
+                    colorir(jTextPane2,"Erro na compilacao :\n "+a , Color.RED);
+                    compilado = false;
+                }
+            
             }       
         }catch(Exception ex) {
             ex.printStackTrace();
