@@ -103,7 +103,7 @@ public class ColorePane {
                                    
                                  
                             }
-                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
+                            else if  (text.substring(inp, fimp).matches("(\\W)*[0-9]+"))
                             {
                                 if(inp==0 && naopode==false){
                                     setCharacterAttributes(inp, fimp - inp, verde, false);
@@ -253,7 +253,7 @@ public class ColorePane {
                                                 }
                                                
                                             }
-                                            else if  (text.substring(inp, fimp).matches("(\\W)*[1-9]+"))
+                                            else if  (text.substring(inp, fimp).matches("(\\W)*[0-9]+"))
                                             {
                                                     if(inp==0 && naopode==false){
                                                         setCharacterAttributes(inp, fimp - inp, verde, false);
