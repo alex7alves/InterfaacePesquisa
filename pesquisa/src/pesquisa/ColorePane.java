@@ -88,7 +88,7 @@ public class ColorePane {
                                         } 
                                     }
                                 } 				
-                            if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|bool|verdadeiro|falso|ou)"))
+                            if (text.substring(inp, fimp).matches("(\\W)*(funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
                             {
                                
                                 if(inp==0 && naopode==false){
@@ -241,7 +241,7 @@ public class ColorePane {
                                                     } 
                                                 }
                                             } 
-                                           if (text.substring(inp, fimp).matches("(\\W)*(inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|bool|verdadeiro|falso|ou)"))
+                                           if (text.substring(inp, fimp).matches("(\\W)*(funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
                                             {
                                                 if(inp==0 && naopode==false){
                                                         setCharacterAttributes(inp, fimp - inp, azul, false);
