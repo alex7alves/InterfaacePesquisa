@@ -69,164 +69,18 @@ public class ColorePane {
                       
              
                  
-                int x = ultimo(text, offset);
+                  final int indice=0;  
+                           int x = indice;
                 if (x < 0) x = 0;
-                    int y= inicio(text, offset + str.length());
+                    int y= text.length();//inicio(text, offset + str.length());
                     int inp = x;
                     int fimp = x;
 
   
-                    while (fimp <= y) {
-                            if (fimp == y || String.valueOf(text.charAt(fimp)).matches("\\W")) {
-                                if(inp==0) {
-                                    for(int i=0; i<naopermite.length();i++){
-                                        if( text.charAt(0)!=naopermite.charAt(i)){
-                                        
-                                        }
-                                        else{
-                                            naopode=true;
-                                        } 
-                                    }
-                                } 				
-                            if (text.substring(inp, fimp).matches("(\\W)*(funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
-                            {
-                               
-                                if(inp==0 && naopode==false){
-                                    setCharacterAttributes(inp, fimp - inp, azul, false);
-                                
-                                
-                                }else {
-                                    setCharacterAttributes(inp+1, fimp - inp, azul, false);
-                                    naopode=false;
-                                }
-                                        
-                                   
-                                 
-                            }
-                            else if  (text.substring(inp, fimp).matches("(\\W)*[0-9]+"))
-                            {
-                                if(inp==0 && naopode==false){
-                                    setCharacterAttributes(inp, fimp - inp, verde, false);
-                                
-                                
-                                }else {
-                                    setCharacterAttributes(inp+1, fimp - inp, verde, false);
-                                    naopode=false;
-                                }
-
-                                
-                                
-                            }
+            
                            
-                            else
-                            {
-                              setCharacterAttributes(inp, fimp - inp, preto, false);
-                                
-                            }
-                            inp = fimp;
-                        }
-                        fimp++;
-                    }
-                        int z = text.length();
-    
-                        int cont=0,f=0,e=0,aux=0,g=0,h=0,inc=0,finc=0,contfimc=0;
-                        boolean duplabarra =false,coment=false, aspas1=false, aspas2=false;
-                        for(int i =0;i<z; i++){
-           
-           
-                           if(text.charAt(i)=='\"') {
-             
-                               cont++;
-                               if(cont ==1) {
-                                    f=i;
-                         
-                               }
-                     
-                               else if(cont ==2) {
-                                    e=i;
-                 
-                                    setCharacterAttributes(f, e-f+1, amarelo, false);
-                                    cont=0;
-                                    hastring= true;
-                                 
-                                }
-                            }
-                        }
-                      
-                        try {
-                            if(z>=3){
-                                for(int j=0;j<z; j++){
-                            
-                                    if(text.charAt(j)=='/'&& text.charAt(j+1)=='/' ) {
-                              
-                                     
-                                        duplabarra= true;
-                                        if( duplabarra == true ){
-                                            g=j;
-                                           
-                                        }   
-                                    }else if(text.charAt(j)=='\n' &&  duplabarra == true ) {
-                                        h=j;
-                                        
-                                        duplabarra = false;
-                                        setCharacterAttributes(g, h-g+1, vermelho, false);
-                                         
-                                    }
-                            
-                                }    
-                            
-                                for(int i3 =0;i3<z; i3++){
-                            
-                                    if( text.charAt(i3)=='/'&& text.charAt(i3+1)=='*' ) {
-                                            
-                                      aux ++;
-                                      coment = true;
-                                      if( aux==1){
-                                        inc=i3;
-                                        if(text.charAt(i3-1)=='\"' ){
-                                            aspas1 =true;
+                        
                           
-                                        }
-                                      }
-                                    
-                                    }else if(text.charAt(i3)=='*' && text.charAt(i3+1)=='/') {
-                                        finc=i3;
-                                       if(text.charAt(i3+2)=='\"'){
-                                            aspas2=true;
-                                        }
-                                        if(aspas1!= true && aspas2 != true ){
-                                        if(coment == true){
-                                            setCharacterAttributes(inc,finc-inc+2, vermelho, false);
-                                            aux=0;
-                                            coment=false;
-                                            hablocoComentado=true;
-                                           
-                                        }
-                                        
-                                    }
-                                    }else {
-                                        
-                                        aspas1=false;
-                                        aspas2=false;
-                                    }
-                            
-                                }     
-                            } 
-                        
-                        }catch (Exception ex) {
-                        }
-                      
-                        
-                        
-                       if(hastring==true ||  hablocoComentado==true){
-                           
-                        
-                            final int indice=0;  
-                            x = indice;
-                            if (x < 0) x = 0;
-                                y= text.length();
-                                inp = x;
-                                fimp = x;
            
                                 while (fimp <= y) {
                      
@@ -265,7 +119,12 @@ public class ColorePane {
                                                     }
                                           
                                             }
-                                         
+                                           /* else if  (text.substring(inp, fimp).matches("(\\W)*[><()+-=]"))
+                                            {
+                                                
+                                                        setCharacterAttributes(inp, fimp - inp, preto, false);
+               
+                                            }*/
                                             else
                                             {
                                                 setCharacterAttributes(inp, fimp - inp, preto, false);
@@ -280,9 +139,14 @@ public class ColorePane {
                                 int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
                                 boolean duplabarra2 =false,coment2=false,aspas21=false,aspas22=false;
                                 for(int i4 =0;i4<z2; i4++){
-           
+                                    if(text.charAt(i4)=='/'|| text.charAt(i4)=='(' || text.charAt(i4)==')' || text.charAt(i4)=='+'|| text.charAt(i4)=='-' || text.charAt(i4)=='*'|| text.charAt(i4)=='>'||text.charAt(i4)=='<'|| text.charAt(i4)=='=') {
+                                         int cv =i4;
+                                        setCharacterAttributes(cv,1, preto, false);
+                                        
+                                    }
                                     if(text.charAt(i4)=='\"') {
-             
+                                    
+                                    
                                         cont2++;
                              
                                         if(cont2 ==1) {
@@ -365,7 +229,7 @@ public class ColorePane {
                         
                         
                       
-            }            
+                      
         };
        
         pane.setDocument(doc) ; 
