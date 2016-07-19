@@ -139,7 +139,7 @@ public class ColorePane {
                                 int cont2 =0,f2=0,e2=0,aux2=0,g2=0,h2=0,inc2=0,finc2=0,contfimc2=0;
                                 boolean duplabarra2 =false,coment2=false,aspas21=false,aspas22=false;
                                 for(int i4 =0;i4<z2; i4++){
-                                    if(text.charAt(i4)=='/'|| text.charAt(i4)=='(' || text.charAt(i4)==')' || text.charAt(i4)=='+'|| text.charAt(i4)=='-' || text.charAt(i4)=='*'|| text.charAt(i4)=='>'||text.charAt(i4)=='<'|| text.charAt(i4)=='=') {
+                                    if(text.charAt(i4)==','|| text.charAt(i4)=='['||text.charAt(i4)==']'||text.charAt(i4)=='/'|| text.charAt(i4)=='(' || text.charAt(i4)==')' || text.charAt(i4)=='+'|| text.charAt(i4)=='-' || text.charAt(i4)=='*'|| text.charAt(i4)=='>'||text.charAt(i4)=='<'|| text.charAt(i4)=='=') {
                                          int cv =i4;
                                         setCharacterAttributes(cv,1, preto, false);
                                         
