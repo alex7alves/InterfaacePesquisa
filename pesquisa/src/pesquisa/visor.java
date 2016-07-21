@@ -60,7 +60,7 @@ public class visor extends javax.swing.JFrame {
     private String pegaAberto,PegaSalvo;
     int flag=0;
     public visor() {
-       
+      
         tasalvo = false;
         taaberto=false;
         compilado = false;
@@ -77,6 +77,7 @@ public class visor extends javax.swing.JFrame {
            pegaAberto=jTextPane1.getText(); 
            flag=1;
         }*/
+     
         Fechar();
           /* Gerente = new UndoManager();
         jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
@@ -195,7 +196,7 @@ public class visor extends javax.swing.JFrame {
         try{
       
            // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
-            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " > novo ";
+            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
@@ -224,7 +225,7 @@ public class visor extends javax.swing.JFrame {
                 }
             
             }else {
-                con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua main.lua "+caminho+ " 2> novo ";
+                con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " 2> novo ";
             Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
             
             p2.waitFor();
@@ -358,7 +359,7 @@ public class visor extends javax.swing.JFrame {
           
                 //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
                // String tudo = "@SET PATH=%path%;\"C:\\Portugol-IDE\\IDE\\Executaveis\" && cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
-                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua53 main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
@@ -833,6 +834,7 @@ public class visor extends javax.swing.JFrame {
             listaAux.add(s);
             h2= lista.size();
             jTextPane1.setText(lista.get(h2-1).toString());
+           
         } catch (Exception ex) {
         }
        
@@ -847,6 +849,7 @@ public class visor extends javax.swing.JFrame {
             jTextPane1.setText(listaAux.get(re1-1).toString());
             String l = listaAux.remove(re1-1).toString();
             lista.add(l);
+            
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jMenuItem12RefazerActionPerformed
@@ -903,6 +906,8 @@ public class visor extends javax.swing.JFrame {
         // Botão colar
         JTextPane colar = jTextPane1; 
         colar.paste();
+        ColorePane cp = new ColorePane();
+        cp.PalavraReservada(jTextPane1);  
     }//GEN-LAST:event_jMenuItem10ColarActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
