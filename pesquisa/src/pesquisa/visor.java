@@ -177,7 +177,7 @@ public class visor extends javax.swing.JFrame {
                
                     tasalvo = true;
                     taaberto =true;
-                    this.setTitle(nome+"- Portugol IDE");
+                    this.setTitle(nome+"- QuoGol IDE");
                     jTextPane1.setText(sb.toString()); 
                     pegaAberto =  jTextPane1.getText();
                  
@@ -272,7 +272,7 @@ public class visor extends javax.swing.JFrame {
              
             caminho=nov.getPath();
             nome = nov.getName();
-            this.setTitle(nome+"- Portugol IDE");
+            this.setTitle(nome+"- QuoGol IDE");
             tasalvo= true;
             try {
                 String t1 = jTextPane1.getText();
@@ -346,7 +346,7 @@ public class visor extends javax.swing.JFrame {
             BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
             grava.write(t.toString());
             grava.close();
-            this.setTitle(nome+"- Portugol IDE");
+            this.setTitle(nome+"- QuoGol IDE");
             colorir(jTextPane2,"", Color.RED);
             PegaSalvo =  jTextPane1.getText();
         }catch(Exception erro) {
@@ -445,18 +445,18 @@ public class visor extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Portugol IDE");
+        setTitle("QuoGol IDE");
         setExtendedState(getExtendedState());
 
         jLabel1.setText("Saida");
 
         jTextPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextPane1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
