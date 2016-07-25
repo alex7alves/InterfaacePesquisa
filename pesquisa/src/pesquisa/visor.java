@@ -90,7 +90,7 @@ public class visor extends javax.swing.JFrame {
          
         ColorePane cp = new ColorePane();
         cp.PalavraReservada(jTextPane1);  
-        URL pegaImagem = this.getClass().getResource("Apps-Path-icon.png");
+        URL pegaImagem = this.getClass().getResource("Letter-Q-icon.png");
         Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
         this.setIconImage(imagem);
     }
