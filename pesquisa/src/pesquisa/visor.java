@@ -72,11 +72,7 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
         
         initComponents();
-       /* if(flag==0){
-           PegaSalvo=jTextPane1.getText(); 
-           pegaAberto=jTextPane1.getText(); 
-           flag=1;
-        }*/
+       
      
         Fechar();
           /* Gerente = new UndoManager();
