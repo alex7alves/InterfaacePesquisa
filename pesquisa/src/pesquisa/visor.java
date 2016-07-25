@@ -75,12 +75,7 @@ public class visor extends javax.swing.JFrame {
        
      
         Fechar();
-          /* Gerente = new UndoManager();
-        jTextPane1.getDocument().addUndoableEditListener(new UndoableEditListener() {
-            public void undoableEditHappened(UndoableEditEvent e) {
-                Gerente.addEdit(e.getEdit());                       
-            }
-        });*/
+       
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
          
@@ -120,18 +115,9 @@ public class visor extends javax.swing.JFrame {
                 
                 dispose();
         }else {
-              /*  if(comparar.equals(PegaSalvo)==true || comparar.equals(pegaAberto)==true){
-                    
-                }
-               String comparar ;
-                comparar = jTextPane1.getText();
-                 System.out.println(" compara "+ comparar); 
-        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true){
-                 System.out.println(" hey entrou 2"); 
-        }
-                else {*/
-                     // desabilitando o x
-                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+             
+                // desabilitando o x
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
 		if (retorno ==0){
 			Salvar(); 	
@@ -144,8 +130,7 @@ public class visor extends javax.swing.JFrame {
                 }
                
             }
-            }// do else
-           // }
+            }
        
         });
         
@@ -191,13 +176,13 @@ public class visor extends javax.swing.JFrame {
         
         try{
       
-           // String con2 = "cd C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master && lua main.lua "+caminho+ " > novo ";
+          
             String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
             if(p.exitValue()==0){
-                //String v = "C:\\Users\\alve\\Desktop\\oUTROS2\\portugol-master\\novo";
+               
                 String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
                 FileReader fr = new FileReader( v); 
       
@@ -352,9 +337,7 @@ public class visor extends javax.swing.JFrame {
     public void Executar(){
          if(compilado == true) {
             try {
-          
-                //String tudo = "cd C:\\\\Users\\\\alve\\\\Desktop\\\\oUTROS2\\\\portugol-master && echo  @ lua main2.lua "+caminho+" > kkk.bat && echo @ pause >> kkk.bat && echo  @ taskkill /f /im cmd.exe >> kkk.bat ";
-               // String tudo = "@SET PATH=%path%;\"C:\\Portugol-IDE\\IDE\\Executaveis\" && cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+        
                 String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua53 main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
@@ -931,7 +914,7 @@ public class visor extends javax.swing.JFrame {
 
     private void jTextPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyPressed
         // TODO add your handling code here:
-        // System.out.println("algo foi escrit");
+      
     
     }//GEN-LAST:event_jTextPane1KeyPressed
 
@@ -949,7 +932,7 @@ public class visor extends javax.swing.JFrame {
         st2= jTextPane1.getText();
         if(st1.equals(st2) == false){
             lista.add(jTextPane1.getText());
-          // System.out.println(" nova fonte "+ aumentar);
+        
         }
       
     }//GEN-LAST:event_jTextPane1KeyTyped
