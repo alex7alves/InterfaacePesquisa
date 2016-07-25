@@ -33,24 +33,7 @@ public class ColorePane {
    }
    
    
-    private int ultimo (String texto, int indice) {
-        while (--indice >= 0) {
-            if (String.valueOf(texto.charAt(indice)).matches("\\W")) {
-                break;
-            }
-        }
-        return indice;
-    }
-
-    private int inicio (String texto, int indice) {
-        while (indice < texto.length()) {
-            if (String.valueOf(texto.charAt(indice)).matches("\\W")) {
-                break;
-            }
-            indice++;
-        }
-        return indice;
-    }
+   
   
    void  PalavraReservada(final JTextPane pane ){
     
@@ -69,10 +52,10 @@ public class ColorePane {
                       
              
                  
-                  final int indice=0;  
-                           int x = indice;
+                final int indice=0;  
+                int x = indice;
                 if (x < 0) x = 0;
-                    int y= text.length();//inicio(text, offset + str.length());
+                    int y= text.length();
                     int inp = x;
                     int fimp = x;
 
@@ -119,12 +102,7 @@ public class ColorePane {
                                                     }
                                           
                                             }
-                                           /* else if  (text.substring(inp, fimp).matches("(\\W)*[><()+-=]"))
-                                            {
-                                                
-                                                        setCharacterAttributes(inp, fimp - inp, preto, false);
-               
-                                            }*/
+                                         
                                             else
                                             {
                                                 setCharacterAttributes(inp, fimp - inp, preto, false);
