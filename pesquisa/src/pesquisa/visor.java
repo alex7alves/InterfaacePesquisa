@@ -59,6 +59,7 @@ public class visor extends javax.swing.JFrame {
     private boolean desfazer,refazer,evento,OutroEvento;
     private String pegaAberto,PegaSalvo;
     int flag=0;
+    String auxf;
     public visor() {
       
         tasalvo = false;
@@ -85,6 +86,31 @@ public class visor extends javax.swing.JFrame {
         Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
         this.setIconImage(imagem);
     }
+    public visor(String[] a) {
+      
+        tasalvo = false;
+        taaberto=false;
+        compilado = false;
+        sobrescrever= false;
+        desfazer=true;
+        refazer=true;
+        evento=true;
+        OutroEvento=false;
+        cont_aux=0;
+        
+        initComponents();
+        Fechar();
+       
+        TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
+        jScrollPane3.setRowHeaderView(contadorLinhas);  
+         
+        ColorePane cp = new ColorePane();
+        cp.PalavraReservada(jTextPane1);  
+        URL pegaImagem = this.getClass().getResource("Letter-Q-icon.png");
+        Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
+        this.setIconImage(imagem);
+        Parametro(a);
+    }
     
     private void colorir(JTextPane tp, String msg, Color c)
     {
@@ -98,7 +124,40 @@ public class visor extends javax.swing.JFrame {
         tp.setCharacterAttributes(aset, false);
         tp.setText(msg);
     }
+    public void Parametro(String[] args) {
+            if(args.length >= 1) {
+                    File file = new File(args[0]);
+                    try {
+        
+             
+                 
+               
+                        FileReader fr = new FileReader(file); 
+      
+                        BufferedReader br = new BufferedReader(fr); 
+                        String linha; 
+                        StringBuffer sb = new StringBuffer(); 
+                        while((linha = br.readLine()) != null) { 
+                            sb.append(linha).append("\n"); 
+                        } 
+                        fr.close(); 
+                        final String nom,path;
+                        nom = file.getName();
+                        this.setTitle(nom+"- QuoGol IDE");
+                        jTextPane1.setText(sb.toString()); 
+                        tasalvo = true;
+                        taaberto =true;
+                        pegaAberto =  jTextPane1.getText();
+                    colorir(jTextPane2,"", Color.RED);
+                        
+            }catch(Exception erro) {
+        
+            }
+       
+        }
+    }
     
+
     public void Fechar(){
        
       
@@ -150,7 +209,7 @@ public class visor extends javax.swing.JFrame {
                     String linha; 
                     StringBuffer sb = new StringBuffer(); 
                     while((linha = br.readLine()) != null) { 
-                    sb.append(linha).append("\n"); 
+                        sb.append(linha).append("\n"); 
                     } 
                     fr.close(); 
                     nome=abrir.getSelectedFile().getName();
@@ -177,13 +236,13 @@ public class visor extends javax.swing.JFrame {
         try{
       
           
-            String con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " > novo ";
+            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
             if(p.exitValue()==0){
                
-                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
+                String v = "C:\\QuoGol-IDE\\IDE\\portugol-master\\novo";
                 FileReader fr = new FileReader( v); 
       
                 BufferedReader br = new BufferedReader(fr); 
@@ -206,12 +265,12 @@ public class visor extends javax.swing.JFrame {
                 }
             
             }else {
-                con2 = "cd C:\\Portugol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " 2> novo ";
-            Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
+                con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && lua53 compila.lua "+caminho+ " 2> novo ";
+                Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
             
             p2.waitFor();
            
-                String v = "C:\\Portugol-IDE\\IDE\\portugol-master\\novo";
+                String v = "C:\\QuoGol-IDE\\IDE\\portugol-master\\novo";
                 FileReader fr = new FileReader( v); 
      
                 BufferedReader br = new BufferedReader(fr); 
@@ -338,13 +397,13 @@ public class visor extends javax.swing.JFrame {
          if(compilado == true) {
             try {
         
-                String tudo = "cd C:\\Portugol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua53 main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua53 main2.lua "+caminho+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
       
                 if(p.exitValue()==0){
-                    String k= " cd C:\\Portugol-IDE\\IDE\\portugol-master && start compilar.bat";
+                    String k= " cd C:\\QuoGol-IDE\\IDE\\portugol-master && start compilar.bat";
                     Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
                     p2.waitFor();
  
@@ -1092,7 +1151,7 @@ public class visor extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(  final String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1115,12 +1174,15 @@ public class visor extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(visor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
+         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new visor().setVisible(true);
-            }
+                new visor(args).setVisible(true);
+             
+
+            } 
         });
     }
 
