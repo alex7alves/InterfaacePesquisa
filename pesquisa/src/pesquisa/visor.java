@@ -142,13 +142,14 @@ public class visor extends javax.swing.JFrame {
                         } 
                         fr.close(); 
                         final String nom,path;
-                        nom = file.getName();
-                        this.setTitle(nom+"- QuoGol IDE");
+                        nome = file.getName();
+                        caminho = file.getPath();
+                        this.setTitle(nome+"- QuoGol IDE");
                         jTextPane1.setText(sb.toString()); 
                         tasalvo = true;
                         taaberto =true;
                         pegaAberto =  jTextPane1.getText();
-                    colorir(jTextPane2,"", Color.RED);
+                        colorir(jTextPane2,"", Color.RED);
                         
             }catch(Exception erro) {
         
