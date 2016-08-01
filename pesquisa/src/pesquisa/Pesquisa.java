@@ -10,14 +10,18 @@ package pesquisa;
  * @author alve
  */
 public class Pesquisa {
-
+    String aux2;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public Pesquisa(){
+        
+    }
+    public static void main( String[] args) {
         // TODO code application logic here
         
-          new visor().setVisible(true);
+        // aux2 =aux;
+          new visor(args).setVisible(true);
     }
     
 }
