@@ -201,7 +201,7 @@ public class visor extends javax.swing.JFrame {
         
                 JFileChooser abrir = new JFileChooser();
                 abrir.setCurrentDirectory(null);
-                abrir.setFileFilter(new FileNameExtensionFilter("Arquivos por","por"));  
+                abrir.setFileFilter(new FileNameExtensionFilter("Arquivos gol","gol"));  
                 int retorno =  abrir.showOpenDialog(this);   
                 if(retorno == JFileChooser.APPROVE_OPTION){
                     FileReader fr = new FileReader(abrir.getSelectedFile()); 
