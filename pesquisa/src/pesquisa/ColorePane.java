@@ -41,7 +41,7 @@ public class ColorePane {
         
         final AttributeSet azul = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(185,155,10));
-        final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground,  new Color(25,220,70));
+        final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground,  new Color(25,200,70));
         final  AttributeSet vermelho = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.RED);
         final AttributeSet preto = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
         DefaultStyledDocument doc = new DefaultStyledDocument() {
