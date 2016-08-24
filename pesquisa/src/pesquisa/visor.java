@@ -237,7 +237,7 @@ public class visor extends javax.swing.JFrame {
         try{
       
           
-            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && lua53 compila.lua "+"\""+caminho+"\""+ " > novo ";
+            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 1252 && lua53 compila.lua "+"\""+caminho+"\""+ " > novo ";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
@@ -258,7 +258,7 @@ public class visor extends javax.swing.JFrame {
                
                 if(a == null || a.trim().isEmpty()) {
                   
-                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
+                    colorir(jTextPane2, "compilação terminada com sucesso",  new Color(25,200,70));
                     compilado = true;
                 }else {
                     colorir(jTextPane2,a , Color.RED);
@@ -266,7 +266,7 @@ public class visor extends javax.swing.JFrame {
                 }
             
             }else {
-                con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && lua53 compila.lua "+"\""+caminho+"\""+ " 2> novo ";
+                con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 1252 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> novo ";
                 Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
             
             p2.waitFor();
@@ -286,7 +286,7 @@ public class visor extends javax.swing.JFrame {
                
                 if(a == null || a.trim().isEmpty()) {
                   
-                    colorir(jTextPane2, "compilação terminada com sucesso", Color.GREEN);
+                    colorir(jTextPane2, "compilação terminada com sucesso", new Color(25,200,70));
                     compilado = true;
                 }else {
                     colorir(jTextPane2,"Erro na compilacao :\n "+a , Color.RED);
@@ -398,7 +398,7 @@ public class visor extends javax.swing.JFrame {
          if(compilado == true) {
             try {
         
-                String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @ title Executando > compilar.bat  && echo  @ lua53 main2.lua "+"\""+caminho+"\""+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @echo off > compilar.bat &&  echo @ chcp 65001  ^> null >> compilar.bat && echo @ title Executando >> compilar.bat  && echo  @ lua53 main2.lua "+"\""+caminho+"\""+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
