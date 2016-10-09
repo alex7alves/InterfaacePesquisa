@@ -72,7 +72,7 @@ public class ColorePane {
                                                     } 
                                                 }
                                             } 
-                                           if (text.substring(inp, fimp).matches("(\\W)*(escreva|leia|textoComp|textoSub|textoPos|funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
+                                           if (text.substring(inp, fimp).matches("(\\W)*(sorteie|sementesorteio|imprima|escreva|leia|textoComp|textoSub|textoPos|funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
                                             {
                                                 if(inp==0 && naopode==false){
                                                         setCharacterAttributes(inp, fimp - inp, azul, false);
