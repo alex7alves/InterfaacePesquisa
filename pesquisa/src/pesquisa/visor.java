@@ -6,6 +6,7 @@
 package pesquisa;
 
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,10 +16,15 @@ import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -60,6 +66,7 @@ public class visor extends javax.swing.JFrame {
     private String pegaAberto,PegaSalvo;
     int flag=0;
     String auxf;
+    private String local;
     public visor() {
       
         tasalvo = false;
@@ -76,7 +83,8 @@ public class visor extends javax.swing.JFrame {
        
      
         Fechar();
-       
+     
+  
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
          
@@ -110,6 +118,7 @@ public class visor extends javax.swing.JFrame {
         Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
         this.setIconImage(imagem);
         Parametro(a);
+     
     }
     
     private void colorir(JTextPane tp, String msg, Color c)
@@ -134,7 +143,8 @@ public class visor extends javax.swing.JFrame {
                
                         FileReader fr = new FileReader(file); 
       
-                        BufferedReader br = new BufferedReader(fr); 
+                        //BufferedReader br = new BufferedReader(fr); 
+                        BufferedReader br=  new BufferedReader(new InputStreamReader(new FileInputStream(args[0]), "UTF-8"));
                         String linha; 
                         StringBuffer sb = new StringBuffer(); 
                         while((linha = br.readLine()) != null) { 
@@ -144,6 +154,7 @@ public class visor extends javax.swing.JFrame {
                         final String nom,path;
                         nome = file.getName();
                         caminho = file.getPath();
+                        local =file.getParent();
                         this.setTitle(nome+"- QuoGol IDE");
                         jTextPane1.setText(sb.toString()); 
                         tasalvo = true;
@@ -205,17 +216,18 @@ public class visor extends javax.swing.JFrame {
                 int retorno =  abrir.showOpenDialog(this);   
                 if(retorno == JFileChooser.APPROVE_OPTION){
                     FileReader fr = new FileReader(abrir.getSelectedFile()); 
-      
-                    BufferedReader br = new BufferedReader(fr); 
+                    String c = abrir.getSelectedFile().getPath();
+                   // BufferedReader br = new BufferedReader(fr); 
                     String linha; 
                     StringBuffer sb = new StringBuffer(); 
-                    while((linha = br.readLine()) != null) { 
+                    BufferedReader br=  new BufferedReader(new InputStreamReader(new FileInputStream(c), "UTF-8"));
+                  while((linha = br.readLine()) != null) { 
                         sb.append(linha).append("\n"); 
                     } 
                     fr.close(); 
                     nome=abrir.getSelectedFile().getName();
                     caminho=abrir.getSelectedFile().getPath();
-               
+                    local =abrir.getSelectedFile().getParent();
                     tasalvo = true;
                     taaberto =true;
                     this.setTitle(nome+"- QuoGol IDE");
@@ -237,25 +249,25 @@ public class visor extends javax.swing.JFrame {
         try{
       
           
-            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 1252 && lua53 compila.lua "+"\""+caminho+"\""+ " > novo ";
+            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " > "+"\""+local+"\\CompilarGol\"";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
             if(p.exitValue()==0){
                
-                String v = "C:\\QuoGol-IDE\\IDE\\portugol-master\\novo";
-                FileReader fr = new FileReader( v); 
-      
-                BufferedReader br = new BufferedReader(fr); 
+                
+                //BufferedReader br=  new BufferedReader(new InputStreamReader(new FileInputStream("C:\\QuoGol-IDE\\IDE\\portugol-master\\novo"), "UTF-8"));
+                BufferedReader br=  new BufferedReader(new InputStreamReader(new FileInputStream(local+"\\CompilarGol"), "UTF-8"));
                 String linha; 
                 StringBuffer sb = new StringBuffer(); 
                 while((linha = br.readLine()) != null) { 
                     sb.append(linha).append("\n"); 
                 }    
                 br.close();  
-                fr.close();   
+                
                 String a = sb.toString() ;
-               
+       
+            
                 if(a == null || a.trim().isEmpty()) {
                   
                     colorir(jTextPane2, "compilação terminada com sucesso",  new Color(25,200,70));
@@ -266,22 +278,21 @@ public class visor extends javax.swing.JFrame {
                 }
             
             }else {
-                con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 1252 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> novo ";
-                Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
+               // con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> novo ";
+               con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> "+"\""+local+"\\CompilarGol\""; 
+               Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
             
-            p2.waitFor();
+                p2.waitFor();
            
-                String v = "C:\\QuoGol-IDE\\IDE\\portugol-master\\novo";
-                FileReader fr = new FileReader( v); 
-     
-                BufferedReader br = new BufferedReader(fr); 
+               
+                BufferedReader br=  new BufferedReader(new InputStreamReader(new FileInputStream(local+"\\CompilarGol"), "UTF-8"));
                 String linha; 
                 StringBuffer sb = new StringBuffer(); 
                 while((linha = br.readLine()) != null) { 
                     sb.append(linha).append("\n"); 
                 }    
                 br.close();  
-                fr.close();   
+                 
                 String a = sb.toString() ;
                
                 if(a == null || a.trim().isEmpty()) {
@@ -313,12 +324,13 @@ public class visor extends javax.swing.JFrame {
              
             caminho=nov.getPath();
             nome = nov.getName();
+            local =nov.getParent();
             this.setTitle(nome+"- QuoGol IDE");
             tasalvo= true;
             try {
                 String t1 = jTextPane1.getText();
-                  
-                BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
+                BufferedWriter grava1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(nov),"UTF-8"));
+               // BufferedWriter grava1 = new BufferedWriter(new FileWriter(nov));  
                 grava1.write(t1.toString());
                 grava1.close();
                 PegaSalvo =  jTextPane1.getText();
@@ -337,8 +349,8 @@ public class visor extends javax.swing.JFrame {
                     File out2= new File(caminho);
                      
                     String t2 = jTextPane1.getText();
-                   
-                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
+                    PrintWriter  grava1 = new PrintWriter (new OutputStreamWriter (new FileOutputStream (out2), "UTF-8"));
+                   // PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out2)));            
              
                     grava1.flush();
                     grava1.print(t2);
@@ -357,8 +369,8 @@ public class visor extends javax.swing.JFrame {
                     File out = new File(caminho);
                
                     String t1 = jTextPane1.getText();
-                
-                    PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
+                    PrintWriter  grava1 = new PrintWriter (new OutputStreamWriter (new FileOutputStream (out), "UTF-8"));
+                  //  PrintWriter  grava1 = new PrintWriter(new BufferedWriter(new FileWriter(out)));            
               
                     grava1.print(t1);
                   
@@ -382,9 +394,11 @@ public class visor extends javax.swing.JFrame {
         File arquivo= salvar.getSelectedFile();
         caminho = arquivo.getPath();
         nome=arquivo.getName();
+        local =arquivo.getParent();
         try {
             String t = jTextPane1.getText();
-            BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
+            BufferedWriter grava = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(arquivo),"UTF-8"));
+           // BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo));  
             grava.write(t.toString());
             grava.close();
             this.setTitle(nome+"- QuoGol IDE");
@@ -397,14 +411,15 @@ public class visor extends javax.swing.JFrame {
     public void Executar(){
          if(compilado == true) {
             try {
-        
-                String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @echo off > compilar.bat &&  echo @ chcp 65001  ^> null >> compilar.bat && echo @ title Executando >> compilar.bat  && echo  @ lua53 main2.lua "+"\""+caminho+"\""+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+               
+               // String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @echo off > compilar.bat &&  echo @ chcp 65001  ^> null >> compilar.bat && echo @ title Executando >> compilar.bat  && echo  @ lua53 main2.lua "+"\""+caminho+"\""+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
+                String tudo = "cd "+ "\""+ local+ "\""+ "&& echo @echo off >"+ "\""+local+"\\ExecutarGol.bat\""  +" &&  echo @ chcp 65001  ^> null >>" + "\""+local+"\\ExecutarGol.bat\"" +"&& echo @ title Executando >>" + "\""+local+"\\ExecutarGol.bat\""  + " && echo cd  C:\\QuoGol-IDE\\IDE\\portugol-master" + " >> "+ "\""+local+"\\ExecutarGol.bat\""+ " && echo lua53 main2.lua "+"\""+caminho+"\""+" >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo @ pause >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo  @ taskkill /f /im cmd.exe >>"+ "\""+local+"\\ExecutarGol.bat\"" ;         
                 Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
       
                 if(p.exitValue()==0){
-                    String k= " cd C:\\QuoGol-IDE\\IDE\\portugol-master && start compilar.bat";
+                    String k= " cd "+"\""+local+"\""+" && start ExecutarGol.bat";
                     Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
                     p2.waitFor();
  
@@ -490,12 +505,19 @@ public class visor extends javax.swing.JFrame {
         jLabel1.setText("Saida");
 
         jTextPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextPane1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jTextPane1.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                jTextPane1AncestorResized(evt);
             }
         });
         jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -811,27 +833,27 @@ public class visor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10)))
-                .addGap(0, 164, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addGap(0, 98, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane3)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -845,12 +867,12 @@ public class visor extends javax.swing.JFrame {
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1001,6 +1023,7 @@ public class visor extends javax.swing.JFrame {
         // Aumentar o tamanho da fonte
                  
        Aumentar();
+      
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -1148,6 +1171,11 @@ public class visor extends javax.swing.JFrame {
         // da imagem diminuir
         jLabel10.setBorder(null);
     }//GEN-LAST:event_jLabel10MouseExited
+
+    private void jTextPane1AncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTextPane1AncestorResized
+        // 
+       
+    }//GEN-LAST:event_jTextPane1AncestorResized
     
     /**
      * @param args the command line arguments
