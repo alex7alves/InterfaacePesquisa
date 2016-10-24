@@ -67,7 +67,7 @@ public class visor extends javax.swing.JFrame {
     private String pegaAberto,PegaSalvo;
     int flag=0;
     String auxf;
-    private String local=null;
+    private String local=null, pegaTexto=null;
     private static boolean AlterouTamanho=false;
     public visor() {
       
@@ -293,7 +293,7 @@ public class visor extends javax.swing.JFrame {
                     this.setTitle(nome+"- QuoGol IDE");
                     jTextPane1.setText(sb.toString()); 
                     pegaAberto =  jTextPane1.getText();
-                 
+                    pegaTexto  =  jTextPane1.getText();
                     colorir(jTextPane2,"", Color.RED);
                 }         
             }catch(Exception erro) {
@@ -394,7 +394,7 @@ public class visor extends javax.swing.JFrame {
                 grava1.write(t1.toString());
                 grava1.close();
                 PegaSalvo =  jTextPane1.getText();
-                    
+                pegaTexto  =  jTextPane1.getText();    
                   
             }catch(Exception erro) {
         
@@ -417,7 +417,7 @@ public class visor extends javax.swing.JFrame {
                       
                     grava1.close(); 
                     PegaSalvo =  jTextPane1.getText();
-                   
+                    pegaTexto  =  jTextPane1.getText();
                 }catch(Exception erro) {    
                 }
         }
@@ -436,7 +436,7 @@ public class visor extends javax.swing.JFrame {
                   
                     grava1.close(); 
                     PegaSalvo =  jTextPane1.getText(); 
-                    
+                    pegaTexto  =  jTextPane1.getText();
                    
                 }catch(Exception erro) {
                
@@ -464,6 +464,7 @@ public class visor extends javax.swing.JFrame {
             this.setTitle(nome+"- QuoGol IDE");
             colorir(jTextPane2,"", Color.RED);
             PegaSalvo =  jTextPane1.getText();
+            pegaTexto  =  jTextPane1.getText();
         }catch(Exception erro) {
         
         }
