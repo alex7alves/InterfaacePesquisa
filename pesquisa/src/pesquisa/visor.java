@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AttributeSet;
+import javax.swing.text.PlainDocument;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -42,7 +43,7 @@ import javax.swing.undo.UndoManager;
 
 /**
  *
- * @author alve
+ * @author Alex Alves
  */
 public class visor extends javax.swing.JFrame {
 
@@ -54,9 +55,9 @@ public class visor extends javax.swing.JFrame {
     private boolean sobrescrever;
     private boolean tasalvo;
     private boolean taaberto;
-    private String nome;
-    private String caminho;
-    public int aumentar,diminuir;
+    private String nome=null;
+    private String caminho=null;
+    public int aumentar,diminuir,TamanhoFonte;
     final UndoManager Gerente = new UndoManager();
     private int cont_Lista_String,cont_aux;
     private String[] StringArray_Lista;
@@ -66,7 +67,8 @@ public class visor extends javax.swing.JFrame {
     private String pegaAberto,PegaSalvo;
     int flag=0;
     String auxf;
-    private String local;
+    private String local=null;
+    private static boolean AlterouTamanho=false;
     public visor() {
       
         tasalvo = false;
@@ -80,8 +82,13 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
         
         initComponents();
-       
-     
+        try{
+            jTextPane1.setEditorKit(new MeuTab());
+          
+        }catch(Exception e){
+		
+        }
+
         Fechar();
      
   
@@ -107,8 +114,14 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
         
         initComponents();
+        try{
+            jTextPane1.setEditorKit(new MeuTab());
+          
+        }catch(Exception e){
+		
+        }
         Fechar();
-       
+        
         TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
         jScrollPane3.setRowHeaderView(contadorLinhas);  
          
@@ -120,7 +133,54 @@ public class visor extends javax.swing.JFrame {
         Parametro(a);
      
     }
-    
+    public visor(String a,int Tam, boolean aberto, boolean salvo,String nom,String cam,String l) {
+      
+        tasalvo = salvo;
+        taaberto=aberto;
+        compilado = false;
+        sobrescrever= false;
+        desfazer=true;
+        refazer=true;
+        evento=true;
+        OutroEvento=false;
+        cont_aux=0;
+        nome =nom;
+        caminho = cam;
+        local = l;
+        TamanhoFonte= Tam;
+        setExtendedState( MAXIMIZED_BOTH );
+        initComponents();
+        try{
+            jTextPane1.setEditorKit(new MeuTab());
+          
+        }catch(Exception e){
+		
+        }
+        Fechar();
+        
+        //setSize(largura,altura);
+        if(nome == null || nome.trim().isEmpty()) {        
+        
+        }else {
+             this.setTitle(nome + "- QuoGol IDE");   
+        }
+        jTextPane1.setText(a);
+        font = new Font("Dialog", Font.PLAIN,TamanhoFonte);
+        jTextPane1.setFont(font);
+        TextLineNumber contadorLinhas = new TextLineNumber(jTextPane1);  
+        jScrollPane3.setRowHeaderView(contadorLinhas);  
+         
+        ColorePane cp = new ColorePane();
+        cp.PalavraReservada(jTextPane1);  
+        URL pegaImagem = this.getClass().getResource("Letter-Q-icon.png");
+        Image imagem = Toolkit.getDefaultToolkit().getImage(pegaImagem);
+        this.setIconImage(imagem);
+        jTextPane1.setText(a);
+        font = new Font("Dialog", Font.PLAIN,TamanhoFonte);
+        jTextPane1.setFont(font);
+        contadorLinhas = new TextLineNumber(jTextPane1);  
+        jScrollPane3.setRowHeaderView(contadorLinhas);  
+    }
     private void colorir(JTextPane tp, String msg, Color c)
     {
         StyleContext sc = StyleContext.getDefaultStyleContext();
@@ -435,6 +495,8 @@ public class visor extends javax.swing.JFrame {
     public void Aumentar(){
         aumentar  =  font.getSize(); 
         aumentar =  aumentar + 2;
+        TamanhoFonte=aumentar;
+        AlterouTamanho=true;
         font = new Font("Dialog", Font.PLAIN, aumentar);              
         jTextPane1.setFont( font);             
         jTextPane2.setFont(font);
@@ -444,6 +506,8 @@ public class visor extends javax.swing.JFrame {
     public void Diminuir(){
         diminuir =  font.getSize();
         diminuir =  diminuir - 2;
+        TamanhoFonte = diminuir;
+        AlterouTamanho=true;
         font = new Font("Dialog", Font.PLAIN, diminuir);
         jTextPane1.setFont( font);
         jTextPane2.setFont(font);
@@ -476,6 +540,7 @@ public class visor extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -494,6 +559,7 @@ public class visor extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -505,12 +571,17 @@ public class visor extends javax.swing.JFrame {
         jLabel1.setText("Saida");
 
         jTextPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextPane1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+        });
+        jTextPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextPane1FocusGained(evt);
             }
         });
         jTextPane1.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -646,6 +717,20 @@ public class visor extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel10MouseExited(evt);
+            }
+        });
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pesquisa/Computer-icon.png"))); // NOI18N
+        jLabel11.setToolTipText("Tela cheia");
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
             }
         });
 
@@ -800,6 +885,16 @@ public class visor extends javax.swing.JFrame {
 
         jMenu2.add(jMenu4);
 
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/application.png"))); // NOI18N
+        jMenuItem8.setText("Tela cheia");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem8);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Compilar");
@@ -833,46 +928,50 @@ public class visor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(0, 98, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1035,7 +1134,9 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // fonte normal
                        
-        font = new Font("Dialog", Font.PLAIN, 12);      
+        font = new Font("Dialog", Font.PLAIN, 12);   
+        TamanhoFonte=12;
+        AlterouTamanho=true;
         jTextPane1.setFont( font);
         jTextPane2.setFont(font);
         TextLineNumber conl = new TextLineNumber(jTextPane1); 
@@ -1176,6 +1277,39 @@ public class visor extends javax.swing.JFrame {
         // 
        
     }//GEN-LAST:event_jTextPane1AncestorResized
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // Tela cheia
+        if(AlterouTamanho==false){
+            TamanhoFonte =12;
+        }
+        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
+        // Tela cheia
+        BordaLabel(jLabel11);
+    }//GEN-LAST:event_jLabel11MouseEntered
+
+    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+        // Tela cheia
+         jLabel11.setBorder(null);
+    }//GEN-LAST:event_jLabel11MouseExited
+
+    private void jTextPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextPane1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextPane1FocusGained
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+         // Botão  Tela cheia
+        if(AlterouTamanho==false){
+            TamanhoFonte =12;
+        }
+        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -1218,6 +1352,7 @@ public class visor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1245,6 +1380,7 @@ public class visor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5Sair;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
