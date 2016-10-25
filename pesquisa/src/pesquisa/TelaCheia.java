@@ -87,7 +87,7 @@ public class TelaCheia extends javax.swing.JFrame {
         this.setIconImage(imagem);
     }
 
-    public TelaCheia(String a,int Tam, boolean aberto, boolean salvo,String nom, String cam, String l) {
+    public TelaCheia(String a,int Tam, boolean aberto, boolean salvo,String nom, String cam, String l,boolean ev) {
 
         tasalvo = salvo;
         taaberto = aberto;
@@ -102,7 +102,7 @@ public class TelaCheia extends javax.swing.JFrame {
         nome = nom;
         caminho = cam;
         local =l;
-      
+        evento =ev;
         setExtendedState( MAXIMIZED_BOTH );
         initComponents();
         try{
@@ -142,8 +142,9 @@ public class TelaCheia extends javax.swing.JFrame {
                 String comparar;
                 comparar = jTextPane1.getText();
 
-                if (comparar.equals(pegaAberto) == true || comparar.equals(PegaSalvo) == true || evento == true) {
-                 //   new visor(comparar).setVisible(true);
+               if (comparar.equals(pegaAberto) == true || comparar.equals(PegaSalvo) == true || evento == true) {
+                //if( comparar.equals(pegaTexto)==true || evento==true){   
+                //   new visor(comparar).setVisible(true);
                     dispose();
                    
                 } else {
@@ -153,6 +154,7 @@ public class TelaCheia extends javax.swing.JFrame {
                     int retorno = JOptionPane.showConfirmDialog(null, "Deseja salvar as alterações?", "Sair - Portugol IDE", JOptionPane.YES_NO_CANCEL_OPTION);
                     if (retorno == 0) {
                         Salvar();
+                        dispose();
                     } else if (retorno == 2) {
 
                     } else if (retorno == 1) {
@@ -945,19 +947,22 @@ public class TelaCheia extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // Tela principal
+        String comparar = jTextPane1.getText();
+        evento =false;
         if(AlterouTamanho==false){
             TamanhoFonte =12;
         }
-        new visor(jTextPane1.getText(), TamanhoFonte, taaberto, tasalvo,nome,caminho,local).setVisible(true);
+        new visor(jTextPane1.getText(), TamanhoFonte, taaberto, tasalvo,nome,caminho,local,evento).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // Voltar a tela principal
-          if(AlterouTamanho==false){
+        evento =false;
+        if(AlterouTamanho==false){
             TamanhoFonte =12;
         }
-        new visor(jTextPane1.getText(), TamanhoFonte, taaberto, tasalvo,nome,caminho,local).setVisible(true);
+        new visor(jTextPane1.getText(), TamanhoFonte, taaberto, tasalvo,nome,caminho,local,evento).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
