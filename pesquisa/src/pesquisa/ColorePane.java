@@ -43,6 +43,7 @@ public class ColorePane {
         final AttributeSet amarelo = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(185,155,10));
         final  AttributeSet verde = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground,  new Color(25,200,70));
         final  AttributeSet vermelho = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.RED);
+        final  AttributeSet laranja = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(220,110,25));
         final AttributeSet preto = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
         DefaultStyledDocument doc = new DefaultStyledDocument() {
             public void insertString (int offset, String str, AttributeSet a) throws BadLocationException {
@@ -72,7 +73,7 @@ public class ColorePane {
                                                     } 
                                                 }
                                             } 
-                                           if (text.substring(inp, fimp).matches("(\\W)*(sorteie|sementesorteio|imprima|escreva|leia|textoComp|textoSub|textoPos|funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
+                                           if (text.substring(inp, fimp).matches("(\\W)*(funcao|retorna|retorne|novo|inteiro|repita|enquanto|se|senao|fim|numero|e|senaose|nao|mod|texto|booleano|verdadeiro|falso|ou)"))
                                             {
                                                 if(inp==0 && naopode==false){
                                                         setCharacterAttributes(inp, fimp - inp, azul, false);
@@ -80,6 +81,18 @@ public class ColorePane {
                                 
                                                 }else {
                                                         setCharacterAttributes(inp+1, fimp - inp,azul, false);
+                                                        naopode=false;
+                                                }
+                                               
+                                            }
+                                           else if (text.substring(inp, fimp).matches("(\\W)*(sorteie|sementesorteio|imprima|escreva|leia|textoComp|textoSub|textoPos)"))
+                                            {
+                                                if(inp==0 && naopode==false){
+                                                        setCharacterAttributes(inp, fimp - inp, laranja, false);
+                                
+                                
+                                                }else {
+                                                        setCharacterAttributes(inp+1, fimp - inp,laranja, false);
                                                         naopode=false;
                                                 }
                                                
