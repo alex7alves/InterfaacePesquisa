@@ -133,7 +133,7 @@ public class visor extends javax.swing.JFrame {
         Parametro(a);
      
     }
-    public visor(String a,int Tam, boolean aberto, boolean salvo,String nom,String cam,String l) {
+    public visor(String a,int Tam, boolean aberto, boolean salvo,String nom,String cam,String l,boolean ev) {
       
         tasalvo = salvo;
         taaberto=aberto;
@@ -148,6 +148,7 @@ public class visor extends javax.swing.JFrame {
         caminho = cam;
         local = l;
         TamanhoFonte= Tam;
+        evento =ev;
         setExtendedState( MAXIMIZED_BOTH );
         initComponents();
         try{
@@ -231,10 +232,7 @@ public class visor extends javax.swing.JFrame {
     
 
     public void Fechar(){
-       
-      
-         
-        
+
         //  impelentando o x
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
@@ -242,8 +240,8 @@ public class visor extends javax.swing.JFrame {
                String comparar ;
                comparar = jTextPane1.getText();
                 
-        if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true || evento==true){
-                
+       if( comparar.equals(pegaAberto)==true ||  comparar.equals(PegaSalvo)==true || evento==true){
+     // if( comparar.equals(pegaTexto)==true || evento==true){          
                 dispose();
         }else {
              
@@ -251,7 +249,8 @@ public class visor extends javax.swing.JFrame {
                 setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 int retorno = JOptionPane.showConfirmDialog(null,"Deseja salvar as alterações?","Sair - Portugol IDE",JOptionPane.YES_NO_CANCEL_OPTION);     
 		if (retorno ==0){
-			Salvar(); 	
+			Salvar(); 
+                        dispose();
                 }
                 else if (retorno ==2){
 		 	
@@ -436,7 +435,7 @@ public class visor extends javax.swing.JFrame {
                   
                     grava1.close(); 
                     PegaSalvo =  jTextPane1.getText(); 
-                    pegaTexto  =  jTextPane1.getText();
+                    pegaTexto =  jTextPane1.getText();
                    
                 }catch(Exception erro) {
                
@@ -1281,10 +1280,11 @@ public class visor extends javax.swing.JFrame {
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         // Tela cheia
+        evento =false;
         if(AlterouTamanho==false){
             TamanhoFonte =12;
         }
-        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local).setVisible(true);
+        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local,evento).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked
 
@@ -1305,10 +1305,11 @@ public class visor extends javax.swing.JFrame {
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         
          // Botão  Tela cheia
+        evento =false;
         if(AlterouTamanho==false){
             TamanhoFonte =12;
         }
-        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local).setVisible(true);
+        new TelaCheia(jTextPane1.getText(),TamanhoFonte,taaberto,tasalvo,nome,caminho,local,evento).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     
