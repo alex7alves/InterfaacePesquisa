@@ -105,6 +105,9 @@ public class TelaCheia extends javax.swing.JFrame {
         evento =ev;
         setExtendedState( MAXIMIZED_BOTH );
         initComponents();
+         if(TamanhoFonte != 12 && AlterouTamanho == false ){
+             AlterouTamanho = true;
+         }
         try{
             jTextPane1.setEditorKit(new MeuTab());
           
