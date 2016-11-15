@@ -56,7 +56,7 @@ public class visor extends javax.swing.JFrame {
     private boolean tasalvo;
     private boolean taaberto;
     private String nome=null;
-    private String caminho=null;
+    private String caminho=null,particao=null,Iniciodiretorio=null,InicioParticao;
     public int aumentar,diminuir,TamanhoFonte;
     final UndoManager Gerente = new UndoManager();
     private int cont_Lista_String,cont_aux;
@@ -82,6 +82,9 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
         
         initComponents();
+        String localDir = System.getProperty("user.dir");
+        String ld[] = localDir.split(":");
+        InicioParticao = ld[0];
         try{
             jTextPane1.setEditorKit(new MeuTab());
           
@@ -114,6 +117,9 @@ public class visor extends javax.swing.JFrame {
         cont_aux=0;
         
         initComponents();
+        String localDir = System.getProperty("user.dir");
+        String ld[] = localDir.split(":");
+        InicioParticao = ld[0];
         try{
             jTextPane1.setEditorKit(new MeuTab());
           
@@ -151,6 +157,9 @@ public class visor extends javax.swing.JFrame {
         evento =ev;
         setExtendedState( MAXIMIZED_BOTH );
         initComponents();
+        String localDir = System.getProperty("user.dir");
+        String ld[] = localDir.split(":");
+        InicioParticao = ld[0];
         try{
             jTextPane1.setEditorKit(new MeuTab());
           
@@ -308,7 +317,7 @@ public class visor extends javax.swing.JFrame {
         try{
       
           
-            String con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " > "+"\""+local+"\\CompilarGol\"";
+            String con2 = "cd "+InicioParticao+":\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " > "+"\""+local+"\\CompilarGol\"";
             Process p = Runtime.getRuntime().exec("cmd /c" +con2 );
             p.waitFor();
          
@@ -338,7 +347,7 @@ public class visor extends javax.swing.JFrame {
             
             }else {
                // con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> novo ";
-               con2 = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> "+"\""+local+"\\CompilarGol\""; 
+               con2 = "cd "+InicioParticao+":\\QuoGol-IDE\\IDE\\portugol-master && chcp 65001 && lua53 compila.lua "+"\""+caminho+"\""+ " 2> "+"\""+local+"\\CompilarGol\""; 
                Process p2 = Runtime.getRuntime().exec("cmd /c" +con2 );
             
                 p2.waitFor();
@@ -473,16 +482,18 @@ public class visor extends javax.swing.JFrame {
             try {
                
                // String tudo = "cd C:\\QuoGol-IDE\\IDE\\portugol-master && echo @echo off > compilar.bat &&  echo @ chcp 65001  ^> null >> compilar.bat && echo @ title Executando >> compilar.bat  && echo  @ lua53 main2.lua "+"\""+caminho+"\""+" >> compilar.bat && echo @ pause >> compilar.bat && echo  @ taskkill /f /im cmd.exe >> compilar.bat ";
-                String tudo = "cd "+ "\""+ local+ "\""+ "&& echo @echo off >"+ "\""+local+"\\ExecutarGol.bat\""  +" &&  echo @ chcp 65001  ^> null >>" + "\""+local+"\\ExecutarGol.bat\"" +"&& echo @ title Executando >>" + "\""+local+"\\ExecutarGol.bat\""  + " && echo cd  C:\\QuoGol-IDE\\IDE\\portugol-master" + " >> "+ "\""+local+"\\ExecutarGol.bat\""+ " && echo lua53 main2.lua "+"\""+caminho+"\""+" >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo @ pause >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo  @ taskkill /f /im cmd.exe >>"+ "\""+local+"\\ExecutarGol.bat\"" ;         
-                Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
+               String tudo = "cd "+ "\""+ local+ "\""+ "&& echo @echo off >"+ "\""+local+"\\ExecutarGol.bat\""  +" &&  echo @ chcp 65001  ^> null >>" + "\""+local+"\\ExecutarGol.bat\"" +"&& echo @ title Executando >>" + "\""+local+"\\ExecutarGol.bat\"" + " && echo " +InicioParticao+": >>"+ "\""+local+"\\ExecutarGol.bat\"" + "&& echo cd  "+InicioParticao+":\\QuoGol-IDE\\IDE\\portugol-master" + " >> "+ "\""+local+"\\ExecutarGol.bat\""+ " && echo lua53 main2.lua "+"\""+caminho+"\""+" >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo @ pause >>"+ "\""+local+"\\ExecutarGol.bat\""+ "&& echo  @ taskkill /f /im cmd.exe >>"+ "\""+local+"\\ExecutarGol.bat\"" ;         
+               Process p = Runtime.getRuntime().exec("cmd /c" +tudo );    
         
                 p.waitFor();
       
                 if(p.exitValue()==0){
-                    String k= " cd "+"\""+local+"\""+" && start ExecutarGol.bat";
+                    String[] d0 = caminho.split(":");
+                    Iniciodiretorio = d0[0];
+                    String k= Iniciodiretorio+":"+" && cd "+"\""+local+"\""+" && start ExecutarGol.bat";
                     Process p2 = Runtime.getRuntime().exec("cmd /c" + k); 
                     p2.waitFor();
- 
+                    
                 }
       
             }catch(Exception ex) {
