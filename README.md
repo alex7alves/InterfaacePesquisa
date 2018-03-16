@@ -20,7 +20,7 @@
 	A seguir é mostrado como o compilador se comporta ao compilar um programa que contém erros :
 	
 	
-![Programa com erros](https://github.com/alex7alves/Imagens/blob/master/Ex2Quogol IDE.png)
+![Programa com erros](https://github.com/alex7alves/Imagens/blob/master/Ex2Quogol%20IDE.png)
 	
 	
 ## Executando um programa:
@@ -28,7 +28,7 @@
 	A seguir é mostrado como é a saida do programa após corrigir os erros :
 	
 	
-![Programa com erros](https://github.com/alex7alves/Imagens/blob/master/Ex3Quogol IDE.png)
+![Programa com erros](https://github.com/alex7alves/Imagens/blob/master/Ex3Quogol%20IDE.png)
 	
 	
 ## Instalação do software
